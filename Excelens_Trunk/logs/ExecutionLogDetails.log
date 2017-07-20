@@ -1,0 +1,175 @@
+DEBUG | 2017-07-20 21:46:52,203 |(39): Loaded Logger..
+DEBUG | 2017-07-20 21:46:52,203 |(55): Loaded Properties file C:\Excelens_JWS\Excelens_Trunk_Jul122017\src\com\proj\config\Environment.properties
+DEBUG | 2017-07-20 21:46:52,203 |(55): Loading Config properties file
+DEBUG | 2017-07-20 21:46:52,203 |(55): Loaded Properties file C:\Excelens_JWS\Excelens_Trunk_Jul122017\src\com\proj\config\LT-Excelens-QA.properties
+DEBUG | 2017-07-20 21:46:52,203 |(55): Loading OR properties file
+DEBUG | 2017-07-20 21:46:52,203 |(55): Loaded Properties file C:\Excelens_JWS\Excelens_Trunk_Jul122017\src\com\proj\objectRepository\OR.properties
+DEBUG | 2017-07-20 21:46:52,938 |(55): configXLSdone..
+DEBUG | 2017-07-20 21:46:53,047 |(55): Loaded Suite XL files..
+DEBUG | 2017-07-20 21:46:53,063 |(55): Excel reporting is enabled..
+DEBUG | 2017-07-20 21:46:53,250 |(55): Excel reporting is initailized sucessfully..
+DEBUG | 2017-07-20 21:46:53,250 |(55): HTML reporting is enabled..
+DEBUG | 2017-07-20 21:46:53,360 |(55): HTML reporting is initailized sucessfully..
+DEBUG | 2017-07-20 21:46:53,360 |(55): @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+DEBUG | 2017-07-20 21:46:53,372 |(55): About to begin executing Suite corporateLens Suite
+DEBUG | 2017-07-20 21:46:53,372 |(55): @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+DEBUG | 2017-07-20 21:46:53,388 |(55): the run mode of Suite CorporateLens Suite is yes..
+DEBUG | 2017-07-20 21:46:53,388 |(55): ================================================
+DEBUG | 2017-07-20 21:46:53,388 |(55): About to begin executing of the test :- EXL_CorporateLensHomePage_Alerts
+DEBUG | 2017-07-20 21:46:53,388 |(55): ================================================
+DEBUG | 2017-07-20 21:46:53,388 |(55): DataProvider Fetch start for testcase:-EXL_CorporateLensHomePage_Alerts
+DEBUG | 2017-07-20 21:46:53,388 |(55): the testcase-EXL_CorporateLensHomePage_Alerts is fetchable so execute_dataTable now
+DEBUG | 2017-07-20 21:46:53,388 |(55): Fetching data flag of test case EXL_CorporateLensHomePage_Alerts is XL
+DEBUG | 2017-07-20 21:46:53,388 |(55): EXL_CorporateLensHomePage_Alerts DataProvider Xls path-->\\src\\com\\proj\\suitecorporateLens\\testdata\\CorporateLensTestData-Alerts.xlsx 
+DEBUG | 2017-07-20 21:46:54,419 |(55): EXL_CorporateLensHomePage_Alerts-XL Data Provider data-[[Ljava.lang.Object;@31edaa7d
+DEBUG | 2017-07-20 21:46:54,419 |(55): Returned Data from Execute_dataTable : DataProvider for the test case:-EXL_CorporateLensHomePage_Alerts return data is [[Ljava.lang.Object;@31edaa7d
+DEBUG | 2017-07-20 21:46:54,419 |(55): the run mode of Test case: EXL_CorporateLensHomePage_Alerts is yes,hence executing further steps..
+DEBUG | 2017-07-20 21:46:54,424 |(55): Browser to launch is ie..
+DEBUG | 2017-07-20 21:46:54,424 |(55): ie webdriver set for browser..
+DEBUG | 2017-07-20 21:47:01,842 |(55): ie driver initialized..
+DEBUG | 2017-07-20 21:47:01,874 |(55): launching the ie browser
+DEBUG | 2017-07-20 21:47:01,920 |(55): Implicit Wait set to  20
+DEBUG | 2017-07-20 21:47:04,194 |(55): launching the AUT https://leapthoughtqa.sharepoint.com/sites/portal-1707/
+DEBUG | 2017-07-20 21:47:04,194 |(55): waitForElement_logic-Turned off Implicit wait..
+DEBUG | 2017-07-20 21:47:04,225 |(55): Implicit Wait Turn Off..
+DEBUG | 2017-07-20 21:47:04,241 |(55): fetch_ByLocator:-Sucessfully fetched Bylocator for .//*[@id='use_another_account_link']
+DEBUG | 2017-07-20 21:47:04,241 |(55): waitForElement_logic:-Start...//*[@id='use_another_account_link']
+DEBUG | 2017-07-20 21:47:04,241 |(55): Get element by locator: By.xpath: .//*[@id='use_another_account_link']
+ERROR | 2017-07-20 21:47:09,897 |(76): waitForElement_logic:-After binding By element , Unable to wait more for the invisiblity of  .//*[@id='use_another_account_link'] due to error->
+org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.xpath: .//*[@id='use_another_account_link'] (tried for 5 second(s) with 5 SECONDS interval)
+	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:80)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:232)
+	at com.frw.util.ByLocator.getExpectedConditionsLocator(ByLocator.java:70)
+	at com.frw.wait.ExplicitWaitUtil.waitForElement_logic(ExplicitWaitUtil.java:271)
+	at com.frw.wait.ExplicitWaitUtil.waitForElement(ExplicitWaitUtil.java:34)
+	at com.proj.utilApp.ApplicationMethods.O365_loginwithCredentials(ApplicationMethods.java:60)
+	at com.proj.utilApp.ApplicationMethods.launch0365Login(ApplicationMethods.java:46)
+	at com.proj.suitecorporateLens.TestSuiteBase.befMethod(TestSuiteBase.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:564)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:213)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:653)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1220)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
+	at org.testng.TestNG.run(TestNG.java:1057)
+	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:207)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:178)
+Caused by: org.openqa.selenium.NoSuchElementException: Cannot locate an element using By.xpath: .//*[@id='use_another_account_link']
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'DEVENVYM601', ip: '192.168.1.111', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_77'
+Driver info: driver.version: unknown
+	at org.openqa.selenium.support.ui.ExpectedConditions.lambda$findElement$0(ExpectedConditions.java:883)
+	at java.util.Optional.orElseThrow(Unknown Source)
+	at org.openqa.selenium.support.ui.ExpectedConditions.findElement(ExpectedConditions.java:882)
+	at org.openqa.selenium.support.ui.ExpectedConditions.access$000(ExpectedConditions.java:44)
+	at org.openqa.selenium.support.ui.ExpectedConditions$7.apply(ExpectedConditions.java:206)
+	at org.openqa.selenium.support.ui.ExpectedConditions$7.apply(ExpectedConditions.java:202)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:209)
+	... 33 more
+ERROR | 2017-07-20 21:47:09,897 |(76): waitForElement_logic:-Unable to bind the By element for .//*[@id='use_another_account_link'] due to error->
+org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.xpath: .//*[@id='use_another_account_link'] (tried for 5 second(s) with 5 SECONDS interval)
+	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:80)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:232)
+	at com.frw.util.ByLocator.getExpectedConditionsLocator(ByLocator.java:70)
+	at com.frw.wait.ExplicitWaitUtil.waitForElement_logic(ExplicitWaitUtil.java:271)
+	at com.frw.wait.ExplicitWaitUtil.waitForElement(ExplicitWaitUtil.java:34)
+	at com.proj.utilApp.ApplicationMethods.O365_loginwithCredentials(ApplicationMethods.java:60)
+	at com.proj.utilApp.ApplicationMethods.launch0365Login(ApplicationMethods.java:46)
+	at com.proj.suitecorporateLens.TestSuiteBase.befMethod(TestSuiteBase.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:564)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:213)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:653)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1220)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
+	at org.testng.TestNG.run(TestNG.java:1057)
+	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:207)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:178)
+Caused by: org.openqa.selenium.NoSuchElementException: Cannot locate an element using By.xpath: .//*[@id='use_another_account_link']
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'DEVENVYM601', ip: '192.168.1.111', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_77'
+Driver info: driver.version: unknown
+	at org.openqa.selenium.support.ui.ExpectedConditions.lambda$findElement$0(ExpectedConditions.java:883)
+	at java.util.Optional.orElseThrow(Unknown Source)
+	at org.openqa.selenium.support.ui.ExpectedConditions.findElement(ExpectedConditions.java:882)
+	at org.openqa.selenium.support.ui.ExpectedConditions.access$000(ExpectedConditions.java:44)
+	at org.openqa.selenium.support.ui.ExpectedConditions$7.apply(ExpectedConditions.java:206)
+	at org.openqa.selenium.support.ui.ExpectedConditions$7.apply(ExpectedConditions.java:202)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:209)
+	... 33 more
+DEBUG | 2017-07-20 21:47:09,928 |(55): Implicit Wait Turn On and set to  20
+DEBUG | 2017-07-20 21:47:09,928 |(55): waitForElement_logic-Reverted back Implicit wait..
+DEBUG | 2017-07-20 21:47:09,928 |(55): waitForElement_logic-Turned off Implicit wait..
+DEBUG | 2017-07-20 21:47:09,944 |(55): Implicit Wait Turn Off..
+DEBUG | 2017-07-20 21:47:09,944 |(55): fetch_ByLocator:-Sucessfully fetched Bylocator for .//*[@id='cred_userid_inputtext']
+DEBUG | 2017-07-20 21:47:09,944 |(55): waitForElement_logic:-Start...//*[@id='cred_userid_inputtext']
+DEBUG | 2017-07-20 21:47:09,944 |(55): Get element by locator: By.xpath: .//*[@id='cred_userid_inputtext']
+DEBUG | 2017-07-20 21:47:10,038 |(55): Found element after waiting
+DEBUG | 2017-07-20 21:47:10,038 |(55): waitForElement_logic:-Able to wait for element to be invisible...//*[@id='cred_userid_inputtext']
+DEBUG | 2017-07-20 21:47:10,053 |(55): Implicit Wait Turn On and set to  20
+DEBUG | 2017-07-20 21:47:10,053 |(55): waitForElement_logic-Reverted back Implicit wait..
+INFO  | 2017-07-20 21:47:10,460 |(65):  User Name exists and Entered qauser3@leapthoughtqa.onmicrosoft.com
+DEBUG | 2017-07-20 21:47:10,475 |(55): waitForElement_logic-Turned off Implicit wait..
+DEBUG | 2017-07-20 21:47:10,491 |(55): Implicit Wait Turn Off..
+DEBUG | 2017-07-20 21:47:10,491 |(55): fetch_ByLocator:-Sucessfully fetched Bylocator for .//*[@id='cred_password_inputtext']
+DEBUG | 2017-07-20 21:47:10,491 |(55): waitForElement_logic:-Start...//*[@id='cred_password_inputtext']
+DEBUG | 2017-07-20 21:47:10,491 |(55): Get element by locator: By.xpath: .//*[@id='cred_password_inputtext']
+DEBUG | 2017-07-20 21:47:10,585 |(55): Found element after waiting
+DEBUG | 2017-07-20 21:47:10,585 |(55): waitForElement_logic:-Able to wait for element to be invisible...//*[@id='cred_password_inputtext']
+DEBUG | 2017-07-20 21:47:10,600 |(55): Implicit Wait Turn On and set to  20
+DEBUG | 2017-07-20 21:47:10,600 |(55): waitForElement_logic-Reverted back Implicit wait..
+INFO  | 2017-07-20 21:47:11,104 |(65):  User Name exists and Entered W@yt0go2<3
+DEBUG | 2017-07-20 21:47:20,493 |(55): waitForElement_logic-Turned off Implicit wait..
+DEBUG | 2017-07-20 21:47:20,509 |(55): Implicit Wait Turn Off..
+DEBUG | 2017-07-20 21:47:20,509 |(55): fetch_ByLocator:-Sucessfully fetched Bylocator for .//*[@id='cred_sign_in_button']
+DEBUG | 2017-07-20 21:47:20,509 |(55): waitForElement_logic:-Start...//*[@id='cred_sign_in_button']
+DEBUG | 2017-07-20 21:47:20,509 |(55): Get element by locator: By.xpath: .//*[@id='cred_sign_in_button']
+DEBUG | 2017-07-20 21:47:20,603 |(55): Found element after waiting
+DEBUG | 2017-07-20 21:47:20,603 |(55): waitForElement_logic:-Able to wait for element to be invisible...//*[@id='cred_sign_in_button']
+DEBUG | 2017-07-20 21:47:20,618 |(55): Implicit Wait Turn On and set to  20
+DEBUG | 2017-07-20 21:47:20,618 |(55): waitForElement_logic-Reverted back Implicit wait..
+DEBUG | 2017-07-20 21:47:20,946 |(55): Able to action click
+INFO  | 2017-07-20 21:47:20,946 |(65):  Sign In  exists and Clicked 
+DEBUG | 2017-07-20 21:47:20,946 |(55): waitForElement_logic-Turned off Implicit wait..
+DEBUG | 2017-07-20 21:47:20,978 |(55): Implicit Wait Turn Off..
+DEBUG | 2017-07-20 21:47:20,978 |(55): fetch_ByLocator:-Sucessfully fetched Bylocator for .//*[@id='ctl00_pmTopNav']
+DEBUG | 2017-07-20 21:47:20,978 |(55): waitForElement_logic:-Start...//*[@id='ctl00_pmTopNav']
+DEBUG | 2017-07-20 21:47:20,978 |(55): Get element by locator: By.xpath: .//*[@id='ctl00_pmTopNav']

@@ -1,0 +1,1 @@
+<suite name="Selenium Automation Suite-LAT Excelens-1.0"><listeners><listener class-name="com.proj.listener.TestsListenerAdapter"/></listeners><suite-files><suite-file path="./conf/TestNG/suites/corporateLens Suite.xml"/></suite-files></suite>
