@@ -19,6 +19,7 @@ import com.frw.wait.ExplicitWaitUtil;
 import com.proj.Constants.Constants;
 import com.proj.Constants.Constants_TimeOuts;
 import com.proj.objectRepository.ObjRepository;
+import com.proj.util.ColorUtils;
 import com.proj.utilApp.KeyMethodsUtil;
 import com.report.reporter.Reporting;
 
@@ -137,12 +138,12 @@ public class KeysUtil extends KeyMethods{
 		String generic_autosuggest_step="Enter Suggestion for ";
 		generic_autosuggest_step=workFlow+generic_autosuggest_step+Step;
 		if(!input.equalsIgnoreCase("") ){
-	//element.click();				
+			//element.click();				
 			if(input.equalsIgnoreCase("Any")){
 				element.sendKeys(Keys.SPACE);
 				element.sendKeys(Keys.BACK_SPACE);
 				Reporting.logStep(driver, refID, generic_autosuggest_step, objectType+": "+objectLocator+" exists and the input value is Any hence entered Space & BackSpace to list all items available", Constants_FRMWRK.Pass);
-			
+
 				logsObj.log(testcaseName+"--> "+objectLocator+" exists and the value entered is "+input);
 				Reporting.logStep(driver, refID, generic_autosuggest_step, objectType+": "+objectLocator+" exists and the value entered is "+input, Constants_FRMWRK.Pass);
 
@@ -154,11 +155,11 @@ public class KeysUtil extends KeyMethods{
 				if(flag_js.equalsIgnoreCase(Constants_FRMWRK.False)){
 					flag=Constants_FRMWRK.False;
 				}
-			
+
 			}else{
 				objectLocator=objectLocator+ObjRepository.js_autosuggest_input;
 				element=ExplicitWaitUtil.waitForElement(driver,locatorType, objectLocator, Constants_TimeOuts.Element_TimeOut) ;
-	//element.click();
+				//element.click();
 				if(input.contains(Constants.delimiter_data)){
 					String[] ip=commonMethods.splitString(input, Constants.delimiter_data);
 					for (int i=0;i<ip.length;i++){
@@ -197,7 +198,7 @@ public class KeysUtil extends KeyMethods{
 					}
 				}
 			}									    					
-			
+
 		}else{
 			flag=Constants_FRMWRK.True;	
 		}
@@ -356,7 +357,7 @@ public class KeysUtil extends KeyMethods{
 		}
 		return flag;
 	}
-	
+
 	/**
 	 * Browse the required file on the page
 	 * @author shaikka
@@ -376,7 +377,7 @@ public class KeysUtil extends KeyMethods{
 		String flag=Constants_FRMWRK.False;
 		String generic_Step="Upload/Browse a ";
 		Step=workFlow+generic_Step+Step;
-		
+
 		element.sendKeys(input);		
 		logsObj.log(testcaseName+"--> "+objectLocator+" exists and the value entered is "+input);
 		Reporting.logStep(driver, refID, Step,  objectType+": "+objectLocator+" exists and the value entered is  "+input, Constants_FRMWRK.Pass);
@@ -595,7 +596,7 @@ public class KeysUtil extends KeyMethods{
 					Rtick=element.isSelected();
 					flag=String.valueOf(Rtick);	
 				}
-				
+
 				if(!Rtick){
 					isTestPass=Constants_FRMWRK.FalseB;
 					Reporting.logStep(driver, refID, Step,   objectType+": "+objectLocator+" exists and the required radiobutton "+input+" is not selected after click action", Constants_FRMWRK.Fail);
@@ -714,8 +715,9 @@ public class KeysUtil extends KeyMethods{
 	 * @param element
 	 * @param validationType
 	 * @return
+	 * @throws Throwable 
 	 */
-	protected static String validate_ValueORText(WebDriver driver,String refID,String testcaseName,String workFlow,String Step,String locatorType, String objectType, String objectLocator,String input,WebElement element,String validationType){
+	protected static String validate_ValueORText(WebDriver driver,String refID,String testcaseName,String workFlow,String Step,String locatorType, String objectType, String objectLocator,String input,WebElement element,String validationType) throws Throwable{
 		String flag=Constants_FRMWRK.False;
 		String generic_Step="Validation of ";
 		Step=workFlow+generic_Step+Step;
@@ -723,7 +725,13 @@ public class KeysUtil extends KeyMethods{
 			flag=element.getAttribute("value");
 		}
 		else{
-			flag=element.getText();
+			try{
+				flag=element.getText();
+			}catch (StaleElementReferenceException st){
+				element=ExplicitWaitUtil.waitForElement(driver, locatorType, objectLocator, Constants_TimeOuts.Element_TimeOut);
+				flag=element.getText();
+			}
+			
 		}
 
 
@@ -859,7 +867,7 @@ public class KeysUtil extends KeyMethods{
 		} 
 		return flag;
 	}
-	
+
 	/**
 	 * Verifies the given element is enabled
 	 * @author Khaleel
@@ -879,7 +887,7 @@ public class KeysUtil extends KeyMethods{
 	protected static String isEnabled(WebDriver driver,String refID,String testcaseName,String workFlow,String Step,String locatorType, String objectType, String objectLocator,String input,WebElement element) throws Throwable{
 		String flag=Constants_FRMWRK.False;
 		String generic_Step="Check Element is enabled ";
-		
+
 		Step=workFlow+generic_Step+Step;
 
 		try{
@@ -893,7 +901,7 @@ public class KeysUtil extends KeyMethods{
 				logsObj.log(testcaseName+"--> "+objectLocator+" exists and enabled status is "+String.valueOf(isEnabled));
 				Reporting.logStep(driver, refID, Step,  objectType+": "+objectLocator+" exists and enable status is "+String.valueOf(isEnabled), Constants_FRMWRK.Fail);
 			}
-			
+
 		}catch (StaleElementReferenceException st)	{
 			logsObj.logError("Stale exits for the element-"+objectLocator,st);
 			boolean isEnabled=element.isEnabled();
@@ -909,12 +917,12 @@ public class KeysUtil extends KeyMethods{
 		}
 		return flag;
 	}
-	
-	
+
+
 	protected static String isDisabled(WebDriver driver,String refID,String testcaseName,String workFlow,String Step,String locatorType, String objectType, String objectLocator,String input,WebElement element) throws Throwable{
 		String flag=Constants_FRMWRK.False;
 		String generic_Step="Check Element is disabled ";
-		
+
 		Step=workFlow+generic_Step+Step;
 
 		try{
@@ -928,7 +936,7 @@ public class KeysUtil extends KeyMethods{
 				logsObj.log(testcaseName+"--> "+objectLocator+" exists and disabled status is "+String.valueOf(isEnabled));
 				Reporting.logStep(driver, refID, Step,  objectType+": "+objectLocator+" exists & is not disable , status is "+String.valueOf(isEnabled), Constants_FRMWRK.Fail);
 			}
-			
+
 		}catch (StaleElementReferenceException st)	{
 			logsObj.logError("Stale exits for the element-"+objectLocator,st);
 			boolean isEnabled=element.isEnabled();
@@ -944,7 +952,7 @@ public class KeysUtil extends KeyMethods{
 		}
 		return flag;
 	}
-	
+
 	protected static String moveToElement(WebDriver driver,String refID,String testcaseName,String workFlow,String Step,String locatorType, String objectType, String objectLocator,String input,WebElement element){
 		String flag=Constants_FRMWRK.False;
 		String generic_Step="Move To Element & Click on ";
@@ -989,6 +997,52 @@ public class KeysUtil extends KeyMethods{
 		}
 		return flag;
 	}
-	
-	
+	/**
+	 * retrieve background from the given element and validate with expected.
+	 * @author ShaikK
+	 * @date 24 Jul 2017 
+	 * @param driver
+	 * @param refID
+	 * @param testcaseName
+	 * @param workFlow
+	 * @param Step
+	 * @param locatorType
+	 * @param objectType
+	 * @param objectLocator
+	 * @param expectedColor
+	 * @param element
+	 * @return
+	 */
+	protected static String validate_backgroundColorNameofWebElement(WebDriver driver,String refID,String testcaseName,String workFlow,String Step,String locatorType, String objectType, String objectLocator,String expectedColor,WebElement element){
+		String flag=Constants_FRMWRK.False;
+		String generic_Step="Fetch and Validate Background Colour for ";
+		Step=workFlow+generic_Step+Step;
+		String bckg_color;
+
+		try{
+			bckg_color=element.getCssValue("background-color").toString();
+			logsObj.log(testcaseName+"-->"+objectLocator+" exists and retrived Css background value- "+bckg_color);
+
+			String [] rgb_bg=commonMethods.splitString(bckg_color, "\\,");
+			String [] rgb_rr=commonMethods.splitString(rgb_bg[0], "\\(");
+			ColorUtils col=new ColorUtils();
+			int r=Integer.valueOf(rgb_rr[1]);
+			int g=Integer.valueOf(rgb_bg[1].trim());
+			int b=Integer.valueOf(rgb_bg[2].trim());
+			String colorNamefromrgb=col.getColorNameFromRgb(r,g,b);
+			logsObj.log(testcaseName+"-->"+objectLocator+" exists and retrived color name from rgb value is "+colorNamefromrgb);
+			if(colorNamefromrgb.equalsIgnoreCase(expectedColor)){
+				Reporting.logStep(driver, refID, Step,  objectType+": "+objectLocator+" exists and retrieved background color -"+colorNamefromrgb+" matches with expected background color -"+expectedColor, Constants_FRMWRK.Pass);
+				flag=colorNamefromrgb;
+			}else{
+				Reporting.logStep(driver, refID, Step,  objectType+": "+objectLocator+" exists and retrieved background color -"+colorNamefromrgb+" doesn't match with expected background color -"+expectedColor, Constants_FRMWRK.Pass);
+			}			
+
+		}catch(Exception ex){
+			Reporting.logStep(driver, refID, Step,  objectType+": "+objectLocator+" could not able to retrieve background colour of element due to "+commonMethods.getStackTrace(ex), Constants_FRMWRK.Fail);
+		}
+		return flag;
+
+	}
+
 }
