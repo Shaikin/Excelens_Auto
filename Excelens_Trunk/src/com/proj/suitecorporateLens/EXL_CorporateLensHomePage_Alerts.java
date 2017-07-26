@@ -6,11 +6,7 @@ import org.testng.annotations.Test;
 
 import com.frw.Constants.Constants_FRMWRK;
 import com.proj.Constants.Constants_ConfigProperties;
-import com.proj.Constants.Constants_Workflow;
-import com.proj.navigations.Navigations_CorporateLens;
-import com.proj.suiteTRANSMITTALS.workflows.Workflows;
 import com.proj.suitecorporateLens.pages.CorporatePortalHomePage;
-import com.proj.suitecorporateLens.pages.SiteContents;
 import com.proj.util.CustomExceptions;
 import com.proj.util.TestExecutionUtil;
 import com.proj.utilApp.ApplicationMethods;
@@ -18,16 +14,13 @@ import com.proj.utilApp.ApplicationMethods;
 
 public class EXL_CorporateLensHomePage_Alerts extends TestSuiteBase{
 
-	static Hashtable<String,String>transmittalData=new Hashtable<String,String>();
-	private static String workflow_l1="Create a new Alert";
-	private static String workflow_l2="Level-2:- ";	
-	private static String workflow_end=" || ";
-
-	private static String username2;
-	private static String password2;
-
-
-	
+	private static String local_testcaseName=EXL_CorporateLensHomePage_Alerts.class.getSimpleName();
+	private static String workflow_contributor_create="As Contributor || Create a new Alert-";
+	private static String workflow_contributor_validate="As Contributor || Alert-";
+	private static String workflow_visitor_validate="As Visitor || Alert-";
+	private static String workflow_contributoranothor_validate="As Another Contributor || Alert-";
+	private static String workflow_AlertStatus="";	
+	private static String workflow_end=" || ";	
 
 	@Test(dataProviderClass=com.proj.util.DataProviders.class,dataProvider="getData_Global")
 	public static void TestEXL_CorporateLensHomePage_Alerts(Hashtable<String,String>data
@@ -40,33 +33,24 @@ public class EXL_CorporateLensHomePage_Alerts extends TestSuiteBase{
 			if(isBeforeMethodPass_corp==Constants_FRMWRK.FalseB){
 				CustomExceptions.Exit(testcaseName, "Before Method-Failure", "Due to above error in the Before Method cannot execute the test..");
 			}
-			/*Navigations_CorporateLens.Settings.navigateToSiteContents(driver_CORP, workflow_l1);
-			SiteContents.clickAlertsLibrary(driver_CORP, workflow_l1);
-			SiteContents.clicknewItem(driver_CORP, workflow_l1);
-			Hashtable <String,String> returndata=CorporatePortalHomePage.createAlert(driver_CORP, testcaseName, refID, workflow_l1, data);
-			System.out.println(returndata);*/
+			workflow_AlertStatus=data.get("Status")+workflow_end;
 			
-		/*	if(data.get("RecieverRole").equalsIgnoreCase(Constants_Workflow.role_admin)){
-				username2 = Constants_ConfigProperties.username_BusinessOwner;
-				password2 = Constants_ConfigProperties.password_BusinessOwner;
-			}else{
-				username2 = Constants_ConfigProperties.username_NonAdminUser;
-				password2 = Constants_ConfigProperties.password_NonAdminUser;
-			}
-
+			//*****************************       CONTRIBUTOR    ******************************************************************
+			Hashtable <String,String> returndata=CorporatePortalHomePage.Alerts.AsContributor_CreateAlert(driver_CORP, refID, local_testcaseName, workflow_contributor_create+workflow_AlertStatus, data);
+			CorporatePortalHomePage.Alerts.vaidate_AlertInHomePage(driver_CORP, refID, local_testcaseName, workflow_contributor_validate+workflow_AlertStatus, returndata, data);
+			ApplicationMethods.logOutFromApplicationAndcloseBrowser(driver_CORP,refID,local_testcaseName);
 			
-			String siteName=ApplicationMethods.getSiteName(Constants_ConfigProperties.testSiteName);
-			String condition="";
-			condition=" ["+data.get("RecieverRole")+"-"+data.get("Action-Level2")+"]";
-
-			//************************************** LEVEL 1 *****************************************************************************
-			String workflow_lvl1=workflow_l1+condition+workflow_end;		
-
-			transmittalData=Workflows.Level1_Initaite_Transmittal(driver_TRANS, Constants_ConfigProperties.testSiteName, workflow_lvl1, data);
-
-			//************************************** LEVEL 2 *****************************************************************************		
-			driver_TRANS=Workflows.Level2_Close_Cancel_Transmittal(siteName,Constants_Workflow.page_actionRequired,driver_TRANS,refID,testcaseName,workflow_l2,condition,workflow_end,Constants_ConfigProperties.testSiteName,browserName,username2, password2, transmittalData, data);
-			*/
+			//*****************************       VISITOR    ******************************************************************
+			driver_CORP=ApplicationMethods.launchBrowserAndlogIntoApplication(browserName,Constants_ConfigProperties.corporateSiteName, Constants_ConfigProperties.username_Visitor, Constants_ConfigProperties.password_Visitor,refID);
+			
+			CorporatePortalHomePage.Alerts.vaidate_AlertInHomePage(driver_CORP, refID, local_testcaseName, workflow_visitor_validate+workflow_AlertStatus, returndata, data);
+			ApplicationMethods.logOutFromApplicationAndcloseBrowser(driver_CORP,refID,local_testcaseName);
+			
+			//*****************************      Another CONTRIBUTOR    ******************************************************************
+			driver_CORP=ApplicationMethods.launchBrowserAndlogIntoApplication(browserName,Constants_ConfigProperties.corporateSiteName, Constants_ConfigProperties.username_NonAdminUser, Constants_ConfigProperties.password_NonAdminUser,refID);
+			CorporatePortalHomePage.Alerts.vaidate_AlertInHomePage(driver_CORP, refID, local_testcaseName, workflow_contributoranothor_validate+workflow_AlertStatus, returndata, data);
+			
+			
 			
 			logsObj.log(" after test of "+testcaseName+"-testresult"+isTestPass);
 
