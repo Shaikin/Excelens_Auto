@@ -20,11 +20,13 @@ public class Constants_TimeOuts {
 	
 	final public static int sync_element_load=5;
 	final public static int sync_frame_load=5;
+	final public static int sync_homepageelement_load=20;
 	
 	// excelens process timeouts
 	final public static int Save_TimeOut=5;
 	final public static int processToComplete=30;
 	final public static int completeActionLink=45;
 	final public static int actionRequiredSyncRecord=40;
+	final public static int processToAlert=5;
 	
 }
