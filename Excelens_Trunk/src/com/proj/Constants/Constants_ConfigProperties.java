@@ -33,8 +33,8 @@ public class Constants_ConfigProperties extends TestSuiteBase{
 			final public static String username_NonAdminUser = CONFIG.getProperty("userUserName2");
 			final public static String password_NonAdminUser = CONFIG.getProperty("userpassword2");
 			
-			final public static String username_SubSiteUser = CONFIG.getProperty("userUserName3");
-			final public static String password_SubSiteUser = CONFIG.getProperty("userpassword3");
+			final public static String username_Visitor = CONFIG.getProperty("userUserName3");
+			final public static String password_Visitor = CONFIG.getProperty("userpassword3");
 
 		//	Database details (optional has to be fetched from DB)
 			
