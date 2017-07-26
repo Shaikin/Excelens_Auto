@@ -426,6 +426,9 @@ public class KeyMethods extends TestBase{
 			case WEBELEMENT:
 				flag=KeysUtil.validate_ValueORText(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element,"Text");				
 				break;
+			case WEBELEMENT_BACKGROUND_COLOR:
+				flag=KeysUtil.validate_backgroundColorNameofWebElement(driver, input, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
+				break;
 			case CHECKBOX:
 				flag=KeysUtil.validate_checkBox(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
 				break;  
@@ -540,21 +543,23 @@ public class KeyMethods extends TestBase{
 			case WEBELEMENT:
 				flag=KeysUtil.validate_ValueORText(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element,"Text");				
 				break;
+			case WEBELEMENT_BACKGROUND_COLOR:
+				flag=KeysUtil.validate_backgroundColorNameofWebElement(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
+				break;
 			case CHECKBOX:
 				flag=KeysUtil.validate_checkBox(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
 				break;  
 			case CHECKBOX_READONLY:
 				flag=KeysUtil.validate_checkBoxReadOnly(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
 				break; 
-
 			case LINK:
 				KeysUtil.validate_ValueORText(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element,"Text");
-
+				break;
 			}	
 			return flag;
 
 		}
-
+		
 		catch (Exception genException)//General exception
 
 		{
@@ -562,7 +567,7 @@ public class KeyMethods extends TestBase{
 			System.out.println("Unable to locate the element "+objectLocator+" due to -->"+genException);
 			logsObj.logError(testcaseName+"Unable to locate the element "+objectLocator+" due to -->",genException);
 
-			Reporting.logStep(driver, Step,  objectType+": "+objectLocator+" ,Unable to locate the element due to -->"+genException, Constants_FRMWRK.Fail);
+			Reporting.logStep(driver, Step,  objectType+": "+objectLocator+" ,Unable to locate the element due to -->"+genException+" and strackTrace-"+commonMethods.getStackTrace(genException), Constants_FRMWRK.Fail);
 			flag=Constants_FRMWRK.False;
 			return flag;
 
