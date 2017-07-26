@@ -68,7 +68,7 @@ public class Driver extends TestBase{
 			cap.setCapability("enablePersistentHover", false);
 		//	cap.setCapability("ensureCleanSession", true);
 			cap.setCapability("unexpectedAlertBehaviour", "accept");
-			cap.setCapability("ie.ensureCleanSession", true);
+//cap.setCapability("ie.ensureCleanSession", true);  commented on Jul 21 as prob with home
 			
 			DesiredCapabilities.internetExplorer().setCapability("ignoreProtectedModeSettings", true);	
 			isRemoteDriver=Constants_FRMWRK.False;
