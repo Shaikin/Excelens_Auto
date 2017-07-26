@@ -35,6 +35,7 @@ public enum ObjectType {
 	TEXTBOX_APPDECIMALS_DBSINGLEDECIMAL,//Two Decimals in the application displayed element but the same element value is stored with single decimal in DB
 	TEXTBOX_MONEY,		
 	WEBELEMENT,
+	WEBELEMENT_BACKGROUND_COLOR,
 	SWITCHTOFRAMEFROMDEFAULT,
 	SWITCHTOSINGLEFRAME,
 	SELECTITEMBYTEXTFROMLIST,
