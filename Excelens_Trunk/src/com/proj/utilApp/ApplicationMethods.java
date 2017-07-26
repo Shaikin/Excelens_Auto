@@ -15,6 +15,7 @@ import com.proj.Constants.Constants;
 import com.proj.Constants.Constants_TimeOuts;
 import com.proj.base.TestBase;
 import com.proj.library.Driver;
+import com.proj.library.ElementPresence;
 import com.proj.library.LocalDriverManager;
 import com.proj.library.commonMethods;
 import com.proj.objectRepository.ObjRepository;
@@ -114,11 +115,11 @@ public static void O365_loginwithCredentials(WebDriver driver,String username,St
 		}			
 	}
 	
-	try{
-		element=ExplicitWaitUtil.waitForElement(driver, Constants_FRMWRK.FindElementByXPATH, ObjRepository.logo_homepage_exelens, Constants_TimeOuts.Page_TimeOut);	
+	boolean islogodisplayed=validate_homePageLogo(driver, Constants_TimeOuts.Element_TimeOut);
+	if(islogodisplayed==Constants_FRMWRK.FalseB){
+		Reporting.logStep(driver, refID,"Login into application", "IE-Log into the application -0365 User Authenication", "Not able to log into the application with user credentials "+username+"--"+password, Constants_FRMWRK.Fail);
+	}else{
 		Reporting.logStep(driver, refID,"Login into application", "IE-Log into the application -0365 User Authenication", "Successfully able to log into the application with user credentials "+username+"--"+password, Constants_FRMWRK.Pass);
-	}catch(Throwable t){
-		Reporting.logStep(driver, refID,"Login into application", "IE-Log into the application -0365 User Authenication", "Not able to log into the application with user credentials "+username+"--"+password+"due to error-"+t, Constants_FRMWRK.Fail);
 	}
 	
 }
@@ -161,8 +162,8 @@ public static void O365_loginwithCredentials(WebDriver driver,String username,St
 			
 			O365_loginwithCredentials(driver, userName, password);
 			
+			//waitforHomePage();
 			
-			waitforHomePage();			
 		}
 		try{
 			PageLoadWaitUtil.waitForPageToLoad(driver);
@@ -231,7 +232,7 @@ public static void O365_loginwithCredentials(WebDriver driver,String username,St
 			Reporting.logStep(driver, refID, "Logout- Click on Sign Out", "Sign Out doesnot exists ", Constants_FRMWRK.Fail);
 		}
 
-		//PageLoadWaitUtil.waitForPageToLoad(driver);
+		//PageLoadWaitUtil.waitForPageToLoad(driver);		
 		return flag;
 	}
 
@@ -583,5 +584,17 @@ public static void O365_loginwithCredentials(WebDriver driver,String username,St
 	public static void isSyncElementDisplayed(WebDriver driver,int timeout){
 		ExplicitWaitUtil.waitForVisibilityOfElements(driver, Constants_FRMWRK.FindElementByXPATH, ObjRepository.search_inlineSearch, timeout);
 		
+	}
+	
+	public static boolean validate_homePageLogo(WebDriver driver,int timeout){
+		boolean flag=Constants_FRMWRK.FalseB;
+		try{
+			//WebElement element=ExplicitWaitUtil.waitForElement(driver, Constants_FRMWRK.FindElementByXPATH, ObjRepository.logo_homepage_exelens, Constants_TimeOuts.Page_TimeOut);
+			flag=ElementPresence.isElementDisplayed(driver, Constants_FRMWRK.FindElementByXPATH, ObjRepository.logo_homepage_exelens, timeout);
+			flag=Constants_FRMWRK.TrueB;
+			}catch(Throwable t){
+			
+		}
+		return flag;
 	}
 }
