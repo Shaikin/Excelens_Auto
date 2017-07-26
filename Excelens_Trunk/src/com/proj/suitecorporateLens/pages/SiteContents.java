@@ -9,23 +9,14 @@ import java.util.Hashtable;
 import org.openqa.selenium.WebDriver;
 
 import com.frw.Constants.Constants_FRMWRK;
-import com.frw.util.DateUtil;
-import com.frw.util.PopUpUtil;
-import com.frw.util.WaitUtil;
 import com.frw.util.Xls_Reader;
 import com.proj.Constants.Constants;
-import com.proj.Constants.Constants_TimeOuts;
-import com.proj.library.ElementPresence;
 import com.proj.library.KeyMethods;
 import com.proj.library.commonMethods;
-import com.proj.objectRepository.ObjRepository;
 import com.proj.suiteDOCS.TestSuiteBase;
-import com.proj.suiteDOCS.pages.Documents_EntryPage;
 import com.proj.suiteTRANSMITTALS.pages.Transmittals_EntryPage;
 import com.proj.util.CustomExceptions;
 import com.proj.util.fetchObjectRepository;
-import com.proj.utilApp.ApplicationMethods;
-import com.proj.utilApp.WebTableUtil;
 import com.report.reporter.Reporting;
 
 public class SiteContents extends TestSuiteBase {
@@ -40,7 +31,7 @@ public class SiteContents extends TestSuiteBase {
 	private static Hashtable<String,String>objects_locatorType_SiteContents=null; 
 	private static Hashtable<String,String>objects_objectType_SiteContents=null;
 	private static Hashtable<String,String>objects_objectLocator_SiteContents=null;
-	@SuppressWarnings("unused")
+
 	private static Hashtable<String,String>objects_step_App=null;
 	private static Hashtable<String,String>objects_locatorType_App=null; 
 	private static Hashtable<String,String>objects_objectType_App=null;
@@ -55,19 +46,18 @@ public class SiteContents extends TestSuiteBase {
 		} catch (Throwable e) {
 			e.printStackTrace();
 			Reporting.logStep("Excel Object Initialization - "+className, "Required Objects for "+className+" are not  initialized due to error-"+e.getStackTrace(), Constants_FRMWRK.Fail);
-          //Reporting.logStep(driver, workflow+" "+page+" - Transmittal ID", "Transmittal ID :-"+res+" is displayed for the record "+subject, Constants_FRMWRK.Pass);    
 		}
 	}
 	public static void addAnApp(WebDriver driver,String workFlow) throws Exception{
 
 		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "Add an app", objects_locatorType_SiteContents, objects_objectType_SiteContents, objects_objectLocator_SiteContents, input);
-		
+
 		if(res.equals(Constants_FRMWRK.False)){
 			CustomExceptions.Exit(objects_objectLocator_SiteContents.get("Add an app"), " Navigate Failure - My Sent", "Please refer above details for more details");
 		}
-		
+
 	}
-	
+
 	public static void clickAlertsLibrary(WebDriver driver,String workFlow) throws Throwable{
 
 		/*		Transmittals_EntryPage.waitInvisiblilityofWorkingTitle(driver);*/
@@ -79,16 +69,27 @@ public class SiteContents extends TestSuiteBase {
 		commonMethods.switchToDefaultPage(driver);
 		commonMethods.pageLoadWait(driver);
 	}
-	
-	public static void clicknewItem(WebDriver driver,String workFlow){
+
+	/**
+	 * Click on new item link on the page
+	 * @author ShaikK
+	 * @date 21 Jul 2017
+	 * @param driver
+	 * @param workFlow
+	 * @throws Throwable
+	 */
+	public static void clicknewItem(WebDriver driver,String workFlow) throws Throwable{
 
 		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "new item", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
+		if(res.equals(Constants_FRMWRK.False)){
+			CustomExceptions.Exit(objects_objectLocator_App.get("new item"), " Navigate Failure - "+objects_step_App.get("new item"), "Please refer above details for more details");
+		}
 		Transmittals_EntryPage.waitInvisiblilityofWorkingTitle(driver);
 
 	}
-	
-	
-/*	public static void clickDMSDocumentLibrary(WebDriver driver,String workFlow){
+
+
+	/*	public static void clickDMSDocumentLibrary(WebDriver driver,String workFlow){
 
 		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "DMS Document Library", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
 		Transmittals_EntryPage.waitInvisiblilityofWorkingTitle(driver);
@@ -104,7 +105,7 @@ public class SiteContents extends TestSuiteBase {
 	public static void clickCreate(WebDriver driver,String workFlow) throws Exception{
 		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "Create - DMS", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
 		Documents_EntryPage.waitInvisiblilityofPopUpDMSDocumentLibrary(driver);
-		
+
 		if(res.equals(Constants_FRMWRK.False)){
 			CustomExceptions.Exit(objects_objectLocator_App.get("Create - DMS"), " Navigate Failure - My Sent", "Please refer above details for more details");
 		}
@@ -116,7 +117,7 @@ public class SiteContents extends TestSuiteBase {
 		String locator= objects_objectLocator_App.get("Verify DMS Document").replaceAll("DmsTitle", DmsLibName);
 		objects_objectLocator_App.put("Verify DMS Document", locator);
 		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "Verify DMS Document", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
-		
+
 	}
 
 	public static void clickSmartFolder(WebDriver driver,String workFlow,Hashtable<String,String>data){
@@ -129,7 +130,7 @@ public class SiteContents extends TestSuiteBase {
 
 	public static void clickFilesOnRibbon(WebDriver driver,String workFlow) throws Exception{
 		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "Files-Ribbon", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
-		
+
 		if(res.equals(Constants_FRMWRK.False)){
 			CustomExceptions.Exit(objects_objectLocator_App.get("Files-Ribbon"), " Navigate Failure - My Sent", "Please refer above details for more details");
 		}
@@ -137,7 +138,7 @@ public class SiteContents extends TestSuiteBase {
 	}
 	public static void clickNewDocument(WebDriver driver,String workFlow) throws Exception{
 		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "New Document dropdown", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
-		
+
 		if(res.equals(Constants_FRMWRK.False)){
 			CustomExceptions.Exit(objects_objectLocator_App.get("New Document dropdown"), " Navigate Failure - My Sent", "Please refer above details for more details");
 		}
@@ -146,7 +147,7 @@ public class SiteContents extends TestSuiteBase {
 	public static void clickDMSSmartFolder(WebDriver driver,String workFlow) throws Exception{
 		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "DMS Smart Folder", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
 		Transmittals_EntryPage.waitInvisiblilityofWorkingTitle(driver);
-		
+
 		if(res.equals(Constants_FRMWRK.False)){
 			CustomExceptions.Exit(objects_objectLocator_App.get("DMS Smart Folder"), " Navigate Failure - My Sent", "Please refer above details for more details");
 		}
@@ -193,8 +194,8 @@ public class SiteContents extends TestSuiteBase {
 			WaitUtil.pause(3);
 			openDMSLibrary(driver_DOCS, workFlow,data);
 		}
-		
-		
+
+
 	}
 	public static void checkDMSLibraryAndRemove(WebDriver driver,String workFlow,Hashtable<String,String>data){
 
@@ -205,7 +206,7 @@ public class SiteContents extends TestSuiteBase {
 
 		int count=1;
 		while(count <2){
-			
+
 			if (isDmsLibraryAvailable == true){
 				//Reporting.logStep(driver, refID, testcaseName, "isDmsLibraryAvailable" ," Is Automation DMS Library available" , Constants_FRMWRK.Pass );
 				Reporting.logStep(driver, refID, testcaseName, workFlow + "Verify if DMS library is available","DMS Document library is avaiable",Constants_FRMWRK.Pass );
@@ -219,12 +220,12 @@ public class SiteContents extends TestSuiteBase {
 			}
 
 		}
-		
+
 	}
 
 
 
-	*//**
+	 *//**
 	 * Enter the required details to create smart folder
 	 * @throws Throwable
 	 *//*
@@ -288,7 +289,7 @@ public class SiteContents extends TestSuiteBase {
 			//Reporting.logStep(driver, refID, testcaseName, "Create Smartfolder-Check for newly added smart folder" ," Newly added Smart folder is available" , Constants_FRMWRK.Pass );
 			Reporting.logStep(driver, refID, testcaseName, workFlow + "Check for newly added smart folder","Newly added Smart folder is available",Constants_FRMWRK.Pass );
 			res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "Smart Folder Name", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
-			
+
 			if(res.equals(Constants_FRMWRK.False)){
 				CustomExceptions.Exit(objects_objectLocator_App.get("Smart Folder Name"), " Navigate Failure - Smart Folder Name", "Please refer above details for more details");
 			}
@@ -300,7 +301,7 @@ public class SiteContents extends TestSuiteBase {
 		clickFilesOnRibbon(driver_DOCS, workFlow);
 		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "Upload Document", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
 		Transmittals_EntryPage.waitInvisiblilityofWorkingTitle(driver);
-		
+
 		if(res.equals(Constants_FRMWRK.False)){
 			CustomExceptions.Exit(objects_objectLocator_App.get("Upload Document"), " Navigate Failure - Upload Document", "Please refer above details for more details");
 		}
@@ -316,7 +317,7 @@ public class SiteContents extends TestSuiteBase {
 	public static void clickGenerateFileName(WebDriver driver,String workFlow) throws Throwable{
 		ApplicationMethods.switchToLatestDLGframe(driver, testcaseName);
 		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "Generate File Name", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
-	
+
 		if(res.equals(Constants_FRMWRK.False)){
 			CustomExceptions.Exit(objects_objectLocator_App.get("Generate File Name"), " Navigate Failure - Generate File Name", "Please refer above details for more details");
 		}
@@ -338,11 +339,11 @@ public class SiteContents extends TestSuiteBase {
 			CustomExceptions.Exit(testcaseName, objects_objectLocator_App.get("Discipline")+" Select taxonomy item Failure - Generate File Name", "Please refer above details for more details");
 		}
 		clickSave(driver, workFlow);
-		
+
 		if(res.equals(Constants_FRMWRK.False)){
 			CustomExceptions.Exit(testcaseName, objects_objectLocator_App.get("Document Type")+" Navigate Failure - Generate File Name", "Please refer above details for more details");
 		}
-		
+
 		Transmittals_EntryPage.waitInvisiblilityofWorkingTitle(driver);
 	}
 
@@ -358,7 +359,7 @@ public class SiteContents extends TestSuiteBase {
 		if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
 			CustomExceptions.Exit(testcasename, workFlow+"File Register-Title", "Error while entering the title,hence exiting the test");
 		}
-		
+
 	}
 
 	public static void verifyDocAddedInSmartFolder (WebDriver driver,String workFlow, String getDocName){
@@ -375,18 +376,18 @@ public class SiteContents extends TestSuiteBase {
 
 	public static void clickLibraryOnRibbon(WebDriver driver,String workFlow){
 		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "Library-Ribbon", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
-		
+
 
 	}
 
 	public static void clickCreateView(WebDriver driver,String workFlow){
 		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "Create View", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
-		
+
 
 	}
 	public static void clickStandardView(WebDriver driver,String workFlow){
 		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "Standard View", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
-		
+
 	}
 
 	public static void navigateToStandardView(WebDriver driver,String workFlow){
@@ -394,7 +395,7 @@ public class SiteContents extends TestSuiteBase {
 		clickCreateView(driver, workFlow);
 		clickStandardView(driver, workFlow);
 	}
-	
+
 	public static void clickPublicViewRadioButton(WebDriver driver,String workFlow,Hashtable<String,String>data){
 		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "Public View", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, data.get("Create Public view"));
 		WaitUtil.pause(3);
@@ -467,13 +468,13 @@ public class SiteContents extends TestSuiteBase {
 
 
 	public static void clickPersonalView(WebDriver driver,String workFlow,String personalViewName) throws Throwable{
-		
+
 		String locator2= objects_objectLocator_App.get("Personal view").replaceAll("textPersonal", personalViewName);
 		objects_objectLocator_App.put("Personal view", locator2);
 		boolean istextPersonalAvailable = commonMethods.isElementDisplayed(driver, objects_locatorType_App.get("Personal view"), objects_objectLocator_App.get("Personal view"));
 
 		if (istextPersonalAvailable== true){
-			
+
 			//Reporting.logStep(driver, refID, testcaseName, "Create Personal view -Check for newly added personal view" ," Newly added personal view is available" , Constants_FRMWRK.Pass );
 			Reporting.logStep(driver, refID, testcaseName, workFlow + "Check for newly added personal view","Newly added personal view is available",Constants_FRMWRK.Pass );
 			res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "Personal view", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
@@ -503,7 +504,7 @@ public class SiteContents extends TestSuiteBase {
 	public static void clickTxFolderView (WebDriver driver,String workFlow){
 
 		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "Transmittal Folder View", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
-		
+
 	}
 
 	public static String txFolderName(WebDriver driver,String workFlow,Hashtable<String,String>data) throws Throwable{
@@ -511,22 +512,22 @@ public class SiteContents extends TestSuiteBase {
 		String Txname = KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "Tx folder Name", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, data.get("TX Folder Name")+"-"+DateUtil.getCurrentDateInRequiredDateFormat("ddMMyyyy hhmmss"));
 		return Txname;
 	}
-	
+
 	public static void mailIds(WebDriver driver,String workFlow,String mailIDWithAttachment){
 		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "Mail Ids", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, mailIDWithAttachment);
-		
+
 	}
 	public static void saveTxFolder(WebDriver driver,String workFlow){
 		clickSave(driver_DOCS, workFlow);
 		Documents_EntryPage.waitInvisiblilityofNewFolder(driver);
 		WaitUtil.pause(8);
-		
+
 	}
-	
+
 	public static void verifyAndClickTxFolderAdded(WebDriver driver,String workFlow, String Txname) throws Throwable{
 		WebTableUtil.searchforDataInsearchColumnAndClickInactionableColumn(driver, testcaseName, workFlow+"Open Tx folder added", ObjRepository.container_dmsLibrary, Txname, "Link", Txname, 5,5 );	
 	}
-	
+
 	public static void verifyDocAttachedInTx(WebDriver driver,String workFlow) throws Throwable{
 		ApplicationMethods.switchToLatestDLGframe(driver_DOCS, testcaseName);
 		int record = WebTableUtil.getNumberOfRecordsFromTable(driver_DOCS, testcaseName, workFlow, ObjRepository.container_documentRegister, 1);
@@ -539,7 +540,7 @@ public class SiteContents extends TestSuiteBase {
 			Reporting.logStep(driver, refID, testcaseName, workFlow + "-List of documents attached to the Tx should be displayed","No documents are displayed",Constants_FRMWRK.Pass );
 		}		
 	}
-	
+
 	public static String getTransmittalIDWithAttachment(WebDriver driver,String refid,String testcasename,String workflow) throws Throwable{
 		Navigations_Fulcrum.Transmittals.navigateToMyinbox(driver);
 		res=KeyMethods.f_performAction(driver, refid, testcasename, workflow, "TransmittalID with attachments", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
@@ -548,11 +549,11 @@ public class SiteContents extends TestSuiteBase {
 		}
 		return res;
 	}
-*/
+	  */
 }
-	
-	
-	
+
+
+
 
 
 
