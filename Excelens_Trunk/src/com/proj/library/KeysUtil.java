@@ -308,7 +308,15 @@ public class KeysUtil extends KeyMethods{
 		Step=workFlow+generic_Step+Step;
 
 		try{
-			//element.click();
+			if(element!=null){
+				try {
+					element=ExplicitWaitUtil.waitForElementTobeActionable(driver, locatorType, objectLocator, Constants_TimeOuts.Element_TimeOut);
+				} catch (Throwable e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
 			commonMethods.actionsClick(driver, element); //commented boz of send --need to check actionsClick2
 			logsObj.log(testcaseName+"-->"+objectLocator+" exists and clicked ");
 			Reporting.logStep(driver, refID, Step,  objectType+": "+objectLocator+" exists and clicked  ", Constants_FRMWRK.Pass);
@@ -321,6 +329,7 @@ public class KeysUtil extends KeyMethods{
 			}*/
 			flag=KeyMethods.staleRecovery_Click(driver, Step, locatorType, objectLocator, Constants_TimeOuts.StaleElement_TimeOut);
 		}
+		
 
 		try {
 			PageLoadWaitUtil.waitForPageToLoad(driver);
@@ -511,7 +520,7 @@ public class KeysUtil extends KeyMethods{
 			generic_Step="Select a Radiobutton for ";
 		}
 		Step=workFlow+generic_Step+Step;
-
+		
 		if (input.equalsIgnoreCase(Constants_FRMWRK.Tick)){
 			boolean tick=Constants_FRMWRK.TrueB;
 			tick=element.isSelected();
@@ -520,6 +529,12 @@ public class KeysUtil extends KeyMethods{
 				commonMethods.actionsClick(driver, element);
 				tick=element.isSelected();
 				flag=String.valueOf(tick);	
+				System.out.println("Recovery of radio button.....");
+				if(!tick){
+					commonMethods.actionsClick(driver, element);
+					tick=element.isSelected();
+					flag=String.valueOf(tick);	
+				}
 				if(!tick){
 					isTestPass=Constants_FRMWRK.FalseB;
 					Reporting.logStep(driver, refID, Step,    objectType+": "+objectLocator+" exists and "+objectType+" is not selected/ticked after click action", Constants_FRMWRK.Fail);
@@ -736,14 +751,14 @@ public class KeysUtil extends KeyMethods{
 
 
 		if (flag.equals(input)){
-			Reporting.logStep(driver, Step, objectType+":- "+objectLocator+" Actual Value: "+flag+" equals with the Expected Value:- "+input, Constants_FRMWRK.Pass);			
+			Reporting.logStep(driver, workFlow+Step, objectType+":- "+objectLocator+" Actual Value: "+flag+" equals with the Expected Value:- "+input, Constants_FRMWRK.Pass);			
 		}
 		else if (flag.contains(input)){
-			Reporting.logStep(driver, Step, objectType+":- "+objectLocator+" Actual Value: "+flag+" matches with the Expected Value:- "+input, Constants_FRMWRK.Pass);			
+			Reporting.logStep(driver, workFlow+Step, objectType+":- "+objectLocator+" Actual Value: "+flag+" matches with the Expected Value:- "+input, Constants_FRMWRK.Pass);			
 		}
 		else{
 			isTestPass=Constants_FRMWRK.FalseB;
-			Reporting.logStep(driver, Step,  objectType+":- "+objectLocator+" Actual Value: "+flag+" does not match with the Expected Value:- "+input, Constants_FRMWRK.Fail);
+			Reporting.logStep(driver, workFlow+Step,  objectType+":- "+objectLocator+" Actual Value: "+flag+" does not match with the Expected Value:- "+input, Constants_FRMWRK.Fail);
 		} 
 
 		return flag;
