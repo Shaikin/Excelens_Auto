@@ -143,7 +143,8 @@ public class WebTableUtil extends TestBase{
 									if(selected==false){
 										logsObj.log("Grid Checkbox after click action is not tick");
 										WaitUtil.pause(1);
-										row_tick.click();
+										//row_tick.click();
+										commonMethods.actionsClick2(driver, row_tick);
 										logsObj.log("Checkbox is selected for the record");
 										/*if(browserName.equalsIgnoreCase(Constants.browserie)){
 										WorkaroundsSelenium.sendControlToElement(browserName, Constants.browserie, row_tick);
@@ -806,7 +807,8 @@ System.out.println("Action data is --"+actionData);
 		try{
 			WaitUtil.pause(Constants_TimeOuts.generic_TimeOut);
 			WebElement element=ExplicitWaitUtil.waitForElement(driver, Constants_FRMWRK.FindElementByXPATH, ObjRepository.grid_nextButton, Constants_TimeOuts.Element_TimeOut);
-			element.click();
+			/*element.click();*/
+			commonMethods.actionsClick(driver, element);
 			WaitUtil.pause(Constants_TimeOuts.generic_TimeOut);
 			commonMethods.pageLoadWait(driver);
 			flag=Constants_FRMWRK.TrueB;
