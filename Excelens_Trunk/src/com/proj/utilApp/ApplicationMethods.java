@@ -117,9 +117,9 @@ public static void O365_loginwithCredentials(WebDriver driver,String username,St
 	
 	boolean islogodisplayed=validate_homePageLogo(driver, Constants_TimeOuts.Element_TimeOut);
 	if(islogodisplayed==Constants_FRMWRK.FalseB){
-		Reporting.logStep(driver, refID,"Login into application", "IE-Log into the application -0365 User Authenication", "Not able to log into the application with user credentials "+username+"--"+password, Constants_FRMWRK.Fail);
+		Reporting.logStep(driver, refID,testcaseName, "IE-Log into the application -0365 User Authenication", "Not able to log into the application with user credentials "+username+"--"+password, Constants_FRMWRK.Fail);
 	}else{
-		Reporting.logStep(driver, refID,"Login into application", "IE-Log into the application -0365 User Authenication", "Successfully able to log into the application with user credentials "+username+"--"+password, Constants_FRMWRK.Pass);
+		Reporting.logStep(driver, refID,testcaseName, "IE-Log into the application -0365 User Authenication", "Successfully able to log into the application with user credentials "+username+"--"+password, Constants_FRMWRK.Pass);
 	}
 	
 }
