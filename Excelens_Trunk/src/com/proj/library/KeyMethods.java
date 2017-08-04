@@ -147,7 +147,7 @@ public class KeyMethods extends TestBase{
 				flag=KeysUtil.isDisabled(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
 				break;
 			case ELEMENT_DISABLE_ATTRIBUTE:
-				flag=KeyMethodsUtil.isDisabledWithAttr(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
+				flag=KeyMethodsUtil.isDisabledWithAttr(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element,Constants_FRMWRK.Yes);
 				break;
 			case MOVETOELEMENT:
 				flag=KeysUtil.moveToElement(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
@@ -208,7 +208,7 @@ public class KeyMethods extends TestBase{
 		try 
 		{
 			WaitUtil.pause(100L);
-			if(!objectType.equalsIgnoreCase("SWITCHTOFRAMEFROMDEFAULT")){
+			if(!(objectType.equalsIgnoreCase("SWITCHTOFRAMEFROMDEFAULT"))&& !(objectType.equalsIgnoreCase("ELEMENT_DISPLAYED"))){
 				element=ExplicitWaitUtil.waitForElement(driver,identifyBy, objectLocator, Constants_TimeOuts.Element_TimeOut) ;
 
 				if(element==null){
@@ -315,7 +315,11 @@ public class KeyMethods extends TestBase{
 				flag=KeysUtil.isDisabled(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
 				break;
 			case ELEMENT_DISABLE_ATTRIBUTE:
-				flag=KeyMethodsUtil.isDisabledWithAttr(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
+				flag=KeyMethodsUtil.isDisabledWithAttr(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element,Constants_FRMWRK.Yes);
+				break;
+			case ELEMENT_DISPLAYED :
+				//dont use this need to enhance.
+				flag=ElementPresence.isElementDisplayed(driver, refID, testcaseName, workFlow, objectType,identifyBy,objectLocator, Constants_TimeOuts.Element_TimeOut);
 				break;
 			case MOVETOELEMENT:
 				flag=KeysUtil.moveToElement(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
@@ -434,10 +438,14 @@ public class KeyMethods extends TestBase{
 				break;  
 			case CHECKBOX_READONLY:
 				flag=KeysUtil.validate_checkBoxReadOnly(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
-				break; 
-
+				break; 			
 			case LINK:
-				KeysUtil.validate_ValueORText(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element,"Text");
+				flag=KeysUtil.validate_ValueORText(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element,"Text");
+				break;
+			case WEBELEMENT_NOTDISPLAYED:
+				//dont use this need to enhance.
+				flag=ElementPresence.check_ElementNotDisplayed(driver, refID, testcaseName, workFlow, identifyBy, objectType, objectLocator, Constants_TimeOuts.Element_optional_TimeOut, element);
+				break;
 
 			}	
 			return flag;
@@ -553,8 +561,11 @@ public class KeyMethods extends TestBase{
 				flag=KeysUtil.validate_checkBoxReadOnly(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
 				break; 
 			case LINK:
-				KeysUtil.validate_ValueORText(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element,"Text");
+				flag=KeysUtil.validate_ValueORText(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element,"Text");
 				break;
+			case WEBELEMENT_NOTDISPLAYED:
+				flag=ElementPresence.check_ElementNotDisplayed(driver, refID, testcaseName, workFlow, identifyBy, objectType, objectLocator, Constants_TimeOuts.Element_optional_TimeOut, element);
+				
 			}	
 			return flag;
 
