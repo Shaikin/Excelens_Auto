@@ -59,12 +59,18 @@ public class SiteContents extends TestSuiteBase {
 	}
 
 	public static void clickAlertsLibrary(WebDriver driver,String workFlow) throws Throwable{
-
-		/*		Transmittals_EntryPage.waitInvisiblilityofWorkingTitle(driver);*/
-
 		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "Alerts Library", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
 		if(res.equals(Constants_FRMWRK.False)){
 			CustomExceptions.Exit(objects_objectLocator_App.get("Alerts Library"), " Navigate Failure - "+objects_step_App.get("Alerts Library"), "Please refer above details for more details");
+		}			
+		commonMethods.switchToDefaultPage(driver);
+		commonMethods.pageLoadWait(driver);
+	}
+
+	public static void clickDocumentsLibrary(WebDriver driver,String workFlow) throws Throwable{
+		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, "Documents Library", objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
+		if(res.equals(Constants_FRMWRK.False)){
+			CustomExceptions.Exit(objects_objectLocator_App.get("Documents Library"), " Navigate Failure - "+objects_step_App.get("Documents Library"), "Please refer above details for more details");
 		}			
 		commonMethods.switchToDefaultPage(driver);
 		commonMethods.pageLoadWait(driver);
