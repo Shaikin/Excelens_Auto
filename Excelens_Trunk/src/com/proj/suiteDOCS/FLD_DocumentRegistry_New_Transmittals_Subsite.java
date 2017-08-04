@@ -43,9 +43,9 @@ public class FLD_DocumentRegistry_New_Transmittals_Subsite extends TestSuiteBase
 			transmittalData=Workflows.Level1_Initaite_Transmittal_FromDocumentRegister(driver_DOCS, Constants_ConfigProperties.testSiteName, workflow_lvl1, data);
 			//************************************** LEVEL 2 *****************************************************************************
 			String subsite=ApplicationMethods.getSubsite(Constants_ConfigProperties.testSiteName, data.get("Subsite"));
-			String username=Constants_ConfigProperties.username_SubSiteUser;
-			String password=Constants_ConfigProperties.password_SubSiteUser;
-			driver_DOCS=Workflows.Level2_Validate_OR_Submit_OR_ApproveOrReject_OR_Forward_OR_ReplyAll_Transmittal(siteName,Constants_Workflow.page_myInbox,driver_DOCS,refID,testcaseName, workflow_l2, condition, workflow_end, subsite, browserName, username, password, transmittalData, data,1);
+//			String username=Constants_ConfigProperties.username_SubSiteUser;
+//			String password=Constants_ConfigProperties.password_SubSiteUser;
+//			driver_DOCS=Workflows.Level2_Validate_OR_Submit_OR_ApproveOrReject_OR_Forward_OR_ReplyAll_Transmittal(siteName,Constants_Workflow.page_myInbox,driver_DOCS,refID,testcaseName, workflow_l2, condition, workflow_end, subsite, browserName, username, password, transmittalData, data,1);
 
 			logsObj.log(" after test of "+testcaseName+"-testresult"+isTestPass);
 		}catch(Throwable t){

@@ -49,13 +49,13 @@ public class FLD_DocumentRegistry_New_Transmittals extends TestSuiteBase{
 
 				if (userIteration ==1)
 				{
-					username = Constants_ConfigProperties.username_AutoTestAdmin;
-					password = Constants_ConfigProperties.password_AutoTestAdmin;
+//					username = Constants_ConfigProperties.username_AutoTestAdmin;
+//					password = Constants_ConfigProperties.password_AutoTestAdmin;
 				}
 				else if (userIteration ==2)
 				{
-					username = Constants_ConfigProperties.username_AutoTestUser;
-					password = Constants_ConfigProperties.password_AutoTestUser;
+//					username = Constants_ConfigProperties.username_AutoTestUser;
+//					password = Constants_ConfigProperties.password_AutoTestUser;
 				}
 
 

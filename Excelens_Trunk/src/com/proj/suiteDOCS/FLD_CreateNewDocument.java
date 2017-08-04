@@ -5,10 +5,6 @@ import java.util.Hashtable;
 import org.testng.annotations.Test;
 
 import com.frw.Constants.Constants_FRMWRK;
-import com.proj.library.LocalDriverManager;
-import com.proj.navigations.Navigations_FluidTX;
-import com.proj.suiteDOCS.pages.Documents_EntryPage;
-import com.proj.suiteDOCS.reusables.DocumentRegisterGridUtil;
 import com.proj.util.CustomExceptions;
 import com.proj.util.TestExecutionUtil;
 
@@ -37,10 +33,10 @@ public class FLD_CreateNewDocument extends TestSuiteBase{
 				CustomExceptions.Exit(testcaseName, "Before Method-Failure", "Due to above error in the Before Method cannot execute the test..");
 			}
 
-			Navigations_FluidTX.navigateToDocuments(LocalDriverManager.getDriver());
-			String getName = Documents_EntryPage.uploadOrCreateOnlineDocument(LocalDriverManager.getDriver(), refID, testcaseName, workflow, data);
-			DocumentRegisterGridUtil.validateUploadedDocument(LocalDriverManager.getDriver(),refID, workflow, testcaseName, getName);
-			Documents_EntryPage.publishMajorVersion(LocalDriverManager.getDriver(), refID, testcaseName, workflow, data,getName,data.get("Major version"));
+//			Navigations_FluidTX.navigateToDocuments(LocalDriverManager.getDriver());
+//			String getName = Documents_EntryPage.uploadOrCreateOnlineDocument(LocalDriverManager.getDriver(), refID, testcaseName, workflow, data);
+//			DocumentRegisterGridUtil.validateUploadedDocument(LocalDriverManager.getDriver(),refID, workflow, testcaseName, getName);
+//			Documents_EntryPage.publishMajorVersion(LocalDriverManager.getDriver(), refID, testcaseName, workflow, data,getName,data.get("Major version"));
 
 			logsObj.log(" after test of "+testcaseName+"-testresult"+isTestPass);
 

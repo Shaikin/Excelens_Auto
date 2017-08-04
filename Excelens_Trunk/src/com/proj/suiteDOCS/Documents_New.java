@@ -11,7 +11,6 @@ import org.testng.annotations.Test;
 import com.frw.Constants.Constants_FRMWRK;
 import com.proj.Constants.Constants;
 import com.proj.Constants.Constants_ConfigProperties;
-import com.proj.navigations.Navigations_Fulcrum;
 import com.proj.util.CustomExceptions;
 import com.proj.util.TestExecutionUtil;
 import com.proj.utilApp.ApplicationMethods;
@@ -73,9 +72,8 @@ public class Documents_New extends TestSuiteBase{
 	public static void TestDocuments_New(Hashtable<String,String>data
 			) throws Throwable{
 		System.out.println("In test");
-		Navigations_Fulcrum.DocumentsAndFileStorage.navigateToBusinessCenter(driver_DOCS);
-		//Documents_EntryPage.uploadADocumentIntoApplication(driver_DOCS, refID, testcaseName, worflow_upload, data);
-	}
+//		Navigations_Fulcrum.DocumentsAndFileStorage.navigateToBusinessCenter(driver_DOCS);
+		}
 
 
 	@AfterMethod
