@@ -55,7 +55,7 @@ public class ObjRepository {
 	public static String container_supportingDocumentFiles="supportingDocumentFiles";
 	public static String container_actions="txActionListTbl";
 	public static String container_uploadedOrNewDocuments="Documents";
-	public static String grid_nextButton=".//*[@id='pagingWPQ2next']/a";
+	public static String grid_nextButton= ".//*[contains(@id,'next')]/a" ; //".//*[@id='pagingWPQ2next']/a";
 	
 	
 	//close and cancel
