@@ -31,11 +31,11 @@ public class DocumentRegisterGridUtil extends TestSuiteBase{
 	}
 
 	public static String validateVersion(WebDriver driver,String refID,String workflow,String testcasename,String docName , String version) throws Throwable {
-
-
 		return WebTableUtil.searchforDataInsearchColumnAndValidateDataInactionableColumn(driver,testcaseName,workflow+" - Major version",ObjRepository.container_uploadedOrNewDocuments,docName ,version,3,7);	
+	}
+	public static String searchAndTickRecord(WebDriver driver,String testcasename,String workflow,String colName,String grid_container,String searchData,int searchCol) throws Throwable{
+		return WebTableUtil.searchforDataInsearchColumnAndTickInactionableColumn(driver, testcasename, workflow+" - "+colName, grid_container, searchData, searchCol, 1);
 
 	}
-
 
 }
