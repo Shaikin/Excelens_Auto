@@ -63,21 +63,24 @@ public class Navigations_CorporateLens extends TestSuiteBase{
 		if(res.equals(Constants_FRMWRK.False)){
 			CustomExceptions.Exit(testcaseName, workflow+" Navigate Failure - "+key_step, "Please refer above details for more details");
 		}
-		ApplicationMethods.validate_homePageLogo(driver, Constants_TimeOuts.sync_homepageelement_load);
+		ApplicationMethods.validate_homePageLogo(driver, Constants_TimeOuts.Page_TimeOut);
 	}
 	
 	
 	
 	public static void navigateToHome(WebDriver driver) throws Throwable{
-		commonMethods.switchToDefaultPage(driver);
-		commonMethods.pageLoadWait(driver);
-		String key_step="Menu - Home";
-		String locator=locator_menu_pattern.replaceAll("objectlocator", objects_objectLocator_Navigation.get(key_step));
-		res=KeyMethods.f_performAction(driver, refID, testcaseName, "", objects_step_Navigation.get(key_step), objects_locatorType_Navigation.get(key_step), objects_objectType_Navigation.get(key_step),locator , input);
-		if(res.equals(Constants_FRMWRK.False)){
-			CustomExceptions.Exit(locator, " Navigate Failure - "+key_step, "Please refer above details for more details");
+		if(!driver.getTitle().equalsIgnoreCase("Home")){
+			commonMethods.switchToDefaultPage(driver);
+			commonMethods.pageLoadWait(driver);
+			String key_step="Menu - Home";
+			String locator=locator_menu_pattern.replaceAll("objectlocator", objects_objectLocator_Navigation.get(key_step));
+			res=KeyMethods.f_performAction(driver, refID, testcaseName, "", objects_step_Navigation.get(key_step), objects_locatorType_Navigation.get(key_step), objects_objectType_Navigation.get(key_step),locator , input);
+			if(res.equals(Constants_FRMWRK.False)){
+				CustomExceptions.Exit(locator, " Navigate Failure - "+key_step, "Please refer above details for more details");
+			}
+			ApplicationMethods.validate_homePageLogo(driver, Constants_TimeOuts.Page_MAX_TimeOut);			
 		}
-		ApplicationMethods.validate_homePageLogo(driver, Constants_TimeOuts.sync_homepageelement_load);
+		
 	}
 
 	public static void navigateToNewsroom(WebDriver driver) throws Throwable{
@@ -89,7 +92,7 @@ public class Navigations_CorporateLens extends TestSuiteBase{
 		if(res.equals(Constants_FRMWRK.False)){
 			CustomExceptions.Exit(locator, " Navigate Failure - "+key_step, "Please refer above details for more details");
 		}
-		ApplicationMethods.validate_homePageLogo(driver, Constants_TimeOuts.sync_homepageelement_load);
+		ApplicationMethods.validate_homePageLogo(driver, Constants_TimeOuts.Page_TimeOut);
 	}
 	
 	public static void navigateToBreadCrumPage(WebDriver driver,String testcasename,String workflow,String PageName) throws Throwable{
