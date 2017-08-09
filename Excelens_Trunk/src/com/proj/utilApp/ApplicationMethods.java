@@ -115,7 +115,7 @@ public static void O365_loginwithCredentials(WebDriver driver,String username,St
 		}			
 	}
 	
-	boolean islogodisplayed=validate_homePageLogo(driver, Constants_TimeOuts.Element_TimeOut);
+	boolean islogodisplayed=validate_homePageLogo(driver, Constants_TimeOuts.Page_MAX_TimeOut);
 	if(islogodisplayed==Constants_FRMWRK.FalseB){
 		Reporting.logStep(driver, refID,testcaseName, "IE-Log into the application -0365 User Authenication", "Not able to log into the application with user credentials "+username+"--"+password, Constants_FRMWRK.Fail);
 	}else{
@@ -590,7 +590,7 @@ public static void O365_loginwithCredentials(WebDriver driver,String username,St
 		boolean flag=Constants_FRMWRK.FalseB;
 		try{
 			//WebElement element=ExplicitWaitUtil.waitForElement(driver, Constants_FRMWRK.FindElementByXPATH, ObjRepository.logo_homepage_exelens, Constants_TimeOuts.Page_TimeOut);
-			flag=ElementPresence.isElementDisplayed(driver, Constants_FRMWRK.FindElementByXPATH, ObjRepository.logo_homepage_exelens, timeout);
+			flag=ElementPresence.isElementDisplayed(driver, Constants_FRMWRK.FindElementByXPATH, ObjRepository.link_user, timeout);
 			flag=Constants_FRMWRK.TrueB;
 			}catch(Throwable t){
 			
