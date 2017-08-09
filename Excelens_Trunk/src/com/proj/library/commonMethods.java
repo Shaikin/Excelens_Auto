@@ -449,6 +449,46 @@ public class commonMethods extends TestBase{
 	public static String report_stackTrace(Exception t){
 		return Arrays.toString(t.getStackTrace());
 	}
+	
+	public static int getWindowsOrTabsCount(WebDriver driver){
+		Set<String> tabs=driver.getWindowHandles();
+		return tabs.size();
+	}
+	
+	public static String getWindowsOrTabsAndValidateTitle(WebDriver driver,String refId,String testcasename,String workFlow,int expectedWindows,String expectedTitle){
+		String flag=Constants_FRMWRK.False;
+		String isTabNewdisplayed=Constants_FRMWRK.False;
+		String isTitledisplayed=Constants_FRMWRK.False;
+		
+		
+		Set<String> tabs=driver.getWindowHandles();
+		String currentTitle="";
+		if(tabs.size()==expectedWindows){		
+			isTabNewdisplayed=Constants_FRMWRK.True;
+		}
+		for(String tab :tabs){
+			currentTitle=driver.switchTo().window(tab).getTitle();
+			if(currentTitle.equals(expectedTitle)){
+				isTitledisplayed=Constants_FRMWRK.True;				
+				break;
+			}
+		}
+		
+		if(isTabNewdisplayed.equalsIgnoreCase(Constants_FRMWRK.True) && isTitledisplayed.equalsIgnoreCase(Constants_FRMWRK.True)){
+			Reporting.logStep(driver, refId, testcasename, workFlow+"- Validate New Window/Tab title", "New Window/Tab is opened and the title displayed-"+currentTitle+" matches with expected title-"+expectedTitle, Constants_FRMWRK.Pass);
+			driver.close();
+			flag=Constants_FRMWRK.True;
+		}
+		else if (isTabNewdisplayed.equalsIgnoreCase(Constants_FRMWRK.True) && isTitledisplayed.equalsIgnoreCase(Constants_FRMWRK.False)){
+			Reporting.logStep(driver, refId, testcasename, workFlow+"- Validate New Window/Tab title", "New Window/Tab is opened and the title displayed-"+currentTitle+" doesnot matches with expected title-"+expectedTitle, Constants_FRMWRK.Fail);
+			driver.close();
+		}
+		else if (isTabNewdisplayed.equalsIgnoreCase(Constants_FRMWRK.False) && isTitledisplayed.equalsIgnoreCase(Constants_FRMWRK.True)){
+			Reporting.logStep(driver, refId, testcasename, workFlow+"- Validate New Window/Tab title", "New Window/Tab is not opened but the title displayed-"+currentTitle+" matches with expected title-"+expectedTitle, Constants_FRMWRK.Fail);
+		}
+		
+		return flag;
+	}
 }
 
 
