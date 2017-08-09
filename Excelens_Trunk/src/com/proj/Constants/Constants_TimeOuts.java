@@ -28,5 +28,6 @@ public class Constants_TimeOuts {
 	final public static int completeActionLink=45;
 	final public static int actionRequiredSyncRecord=40;
 	final public static int processToAlert=5;
+	final public static int processToComplete_Favourite=20;
 	
 }
