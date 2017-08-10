@@ -154,17 +154,17 @@ public class Page extends TestSuiteBase {
 		}	
 	}
 	public static HashMap<String,String> PageDetails(WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>data,String title ) throws Throwable{
-		HashMap<String,String> newsCarouselPageData=new HashMap<String,String>();
+		HashMap<String,String> pageData=new HashMap<String,String>();
 		res=KeyMethods.f_fetchElementDetails(driver, refId, testcasename, workflow, objects_step_page.get("Title"), objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, title);
 		if(res.equals(Constants_FRMWRK.False)){
 			CustomExceptions.Exit(testcasename, objects_step_page.get("Title")+"- Failure", "Please refer above details for more details");
 		}
-		newsCarouselPageData.put("Title", res);
+		pageData.put("Title", res);
 		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Summary", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, data.get("Summary"));
-		newsCarouselPageData.put("Summary", res);
+		pageData.put("Summary", res);
 		
-		String dueDate=DateUtil.getCurrentDateInRequiredDateFormat("dd/MM/yyyy");
-		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Date", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, dueDate);
+		String date=DateUtil.getCurrentDateInRequiredDateFormat("dd/MM/yyyy");
+		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Date", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, date);
 		
 		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Image Caption", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, data.get("Caption"));
 		
@@ -199,7 +199,7 @@ public class Page extends TestSuiteBase {
 		WaitUtil.pause(Constants_TimeOuts.Save_TimeOut);
 		ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
 		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Browsed Image Path", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, input);
-		newsCarouselPageData.put("Browsed Image Path", res);
+		pageData.put("Browsed Image Path", res);
 		Documents_EntryPage.clickOK(driver, refId, testcasename, workflow);
 		
 		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Tag", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, data.get("Tag"));
@@ -215,10 +215,63 @@ public class Page extends TestSuiteBase {
 		WaitUtil.pause(Constants_TimeOuts.Save_TimeOut);
 		clickPublishIt(driver, refId, testcasename, workflow);
 		
-		return newsCarouselPageData;
+		return pageData;
 	}
 	
-	
+	public static HashMap<String,String> PageDetails(WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>data ) throws Throwable{
+		HashMap<String,String> pageData=new HashMap<String,String>();
+		
+		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Page Title", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, data.get("Title")+"-"+DateUtil.getCurrentDateInRequiredDateFormat("ddMMyyyy hhmmss"));
+		pageData.put("Page Title", res);
+		if(res.equals(Constants_FRMWRK.False)){
+			CustomExceptions.Exit(testcasename, objects_step_page.get("Page Title")+"- Failure", "Please refer above details for more details");
+		}
+		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Click here to add Content", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, input);
+		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Content", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, data.get("Content"));
+		
+		String date=DateUtil.getCurrentDateInRequiredDateFormat("dd/MM/yyyy");
+		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Date", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, date);
+		
+		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Location", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, data.get("Location"));
+		
+		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Category", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, data.get("Category"));
+		
+		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Show on Homepage?", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, data.get("Show on Homepage?"));
+		
+	//************************************************************************************************	
+		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Article Image", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, input);
+		
+		ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
+		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Browse", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, input);
+		ApplicationMethods.waitForOverlayToDisappear(driver);
+		WaitUtil.pause(Constants_TimeOuts.generic_TimeOut);
+		ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
+		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Add Image from Local", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, input);
+		ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
+		Transmittals_EntryPage.waitInvisiblilityofWorkingTitle(driver);
+		ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
+		WaitUtil.pause(Constants_TimeOuts.sync_element_load);
+		String fileName=Constants.DataFileLocation_CorporateLens+data.get("Choose a file");
+		Documents_EntryPage.browseAFile(driver, refId, testcasename, workflow, fileName);
+		Documents_EntryPage.clickOK(driver, refId, testcasename, workflow);
+		Documents_EntryPage.clickSave(driver, refId, testcasename, workflow);
+		
+		if(!checkImage(driver, refId, testcasename, workflow,data.get("Choose a file")).equalsIgnoreCase(Constants_FRMWRK.False)){
+			SelectImage(driver, refId, testcasename, workflow,data.get("Choose a file"));
+			clickInsert(driver, refId, testcasename, workflow);
+		}else{
+			ApplicationMethods.closeAllDialogswithCancel(driver, refId, testcasename);
+		}
+		WaitUtil.pause(Constants_TimeOuts.Save_TimeOut);
+		ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
+		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Browsed Image Path", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, input);
+		pageData.put("Browsed Image Path", res);
+		Documents_EntryPage.clickOK(driver, refId, testcasename, workflow);
+		
+		Documents_EntryPage.clickSave(driver, refId, testcasename, workflow);
+		return pageData;
+		
+	}
 }
 
 
