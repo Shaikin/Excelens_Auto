@@ -56,6 +56,7 @@ public class ObjRepository {
 	public static String container_actions="txActionListTbl";
 	public static String container_uploadedOrNewDocuments="Documents";
 	public static String container_AdminFavourites="Admin Favourites";
+	public static String container_Announcements="Announcements";
 	public static String grid_nextButton= ".//*[contains(@id,'next')]/a" ; //".//*[@id='pagingWPQ2next']/a";
 	
 	
