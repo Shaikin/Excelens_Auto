@@ -1,5 +1,6 @@
 package com.proj.suitecorporateLens.pages;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 
 import org.openqa.selenium.WebDriver;
@@ -15,11 +16,13 @@ import com.proj.library.ElementPresence;
 import com.proj.library.KeyMethods;
 import com.proj.library.commonMethods;
 import com.proj.navigations.Navigations_CorporateLens;
+import com.proj.objectRepository.ObjRepository;
 import com.proj.suiteDOCS.pages.Documents_EntryPage;
 import com.proj.suiteDOCS.reusables.DocumentRegisterGridUtil;
 import com.proj.suitecorporateLens.TestSuiteBase;
 import com.proj.util.CustomExceptions;
 import com.proj.util.fetchObjectRepository;
+import com.proj.utilApp.ApplicationMethods;
 import com.report.reporter.Reporting;
 
 public class CorporatePortalHomePage extends TestSuiteBase{
@@ -32,24 +35,35 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 	private static Hashtable<String,String>objects_locatorType_alerts=null; 
 	private static Hashtable<String,String>objects_objectType_alerts=null;
 	private static Hashtable<String,String>objects_objectLocator_alerts=null;
-	
+
 	private static Hashtable<String,String>objects_step_NewsCarousel=null;
 	private static Hashtable<String,String>objects_locatorType_NewsCarousel=null; 
 	private static Hashtable<String,String>objects_objectType_NewsCarousel=null;
 	private static Hashtable<String,String>objects_objectLocator_NewsCarousel=null;
-	
+
 	private static Hashtable<String,String>objects_step_Blog=null;
 	private static Hashtable<String,String>objects_locatorType_Blog=null; 
 	private static Hashtable<String,String>objects_objectType_Blog=null;
 	private static Hashtable<String,String>objects_objectLocator_Blog=null;
-	
+
 	@SuppressWarnings("unused")
 	private static Hashtable<String,String>objects_step_MyDocs=null;
 	private static Hashtable<String,String>objects_locatorType_MyDocs=null; 
 	private static Hashtable<String,String>objects_objectType_MyDocs=null;
 	private static Hashtable<String,String>objects_objectLocator_MyDocs=null;
+
+	private static Hashtable<String,String>objects_step_fav=null;
+	private static Hashtable<String,String>objects_locatorType_fav=null; 
+	private static Hashtable<String,String>objects_objectType_fav=null;
+	private static Hashtable<String,String>objects_objectLocator_fav=null;
 	
-	
+	@SuppressWarnings("unused")
+	private static Hashtable<String,String>objects_step_announcement=null;
+	private static Hashtable<String,String>objects_locatorType_announcement=null; 
+	private static Hashtable<String,String>objects_objectType_announcement=null;
+	private static Hashtable<String,String>objects_objectLocator_announcement=null;
+
+
 	static {		
 		logsObj.log("fetchExcelobjects method triggred for Class "+className);
 		try {
@@ -57,103 +71,105 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_NewsCarousel", "NewsCarousel");
 			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_Blog", "Blog");
 			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_MyDocuments", "MyDocs");
-			
+			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_Favourites", "fav");
+			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_Announcements", "announcement");
+
 		} catch (Throwable e) {
 			e.printStackTrace();
 			Reporting.logStep("Excel Object Initialization - "+className, "Required Objects for "+className+" are not  initialized due to error-"+e.getStackTrace(), Constants_FRMWRK.Fail);
-          //Reporting.logStep(driver, workflow+" "+page+" - Transmittal ID", "Transmittal ID :-"+res+" is displayed for the record "+subject, Constants_FRMWRK.Pass);    
+			//Reporting.logStep(driver, workflow+" "+page+" - Transmittal ID", "Transmittal ID :-"+res+" is displayed for the record "+subject, Constants_FRMWRK.Pass);    
 		}
 	}
 
-	
-	
-	
+
+
+
 	//===============================================================================================================
 	// 							                            ALERTS 
 	//===============================================================================================================
-	
+
 	public static class Alerts{
-		
+
 		private static Hashtable<String,String> createAlert(WebDriver driver,String testcasename,String refid,String workFlow,Hashtable<String,String>data) throws Throwable{
 			Hashtable<String,String> alertdata=new Hashtable<String,String>();
 			res=KeyMethods.f_performAction(driver, refid, testcasename, workFlow, "Alerts-Title", objects_locatorType_alerts, objects_objectType_alerts, objects_objectLocator_alerts, data.get("Title")+"-"+DateUtil.getCurrentDateInRequiredDateFormat("dd/MM/yyyy hh:mm:ss"));
 			alertdata.put("Alerts-Title", res);
-			
+
 			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
 				CustomExceptions.Exit(testcaseName, objects_step_alerts.get("Alerts-Title")+"-Failure", "Please refer above details for more details");
 			}
-			
+
 			res=KeyMethods.f_performAction(driver, refid, testcasename, workFlow, "Alerts-Description", objects_locatorType_alerts, objects_objectType_alerts, objects_objectLocator_alerts, data.get("Description"));
 			alertdata.put("Alerts-Description", res);
-			
+
 			res=KeyMethods.f_performAction(driver, refid, testcasename, workFlow, "Alerts-Status", objects_locatorType_alerts, objects_objectType_alerts, objects_objectLocator_alerts, data.get("Status"));
 			alertdata.put("Alerts-Status", res);
-			
+
 			res=KeyMethods.f_performAction(driver, refid, testcasename, workFlow, "Alerts-Active", objects_locatorType_alerts, objects_objectType_alerts, objects_objectLocator_alerts, data.get("Active"));
 			alertdata.put("Alerts-Active", res);
-			
+
 			Documents_EntryPage.clickSave(driver, refid, testcasename, workFlow);
 			return alertdata;
 
 		}
-		
+
 		private static void validate_alert(WebDriver driver,String refid,String testcasename,String workflow,Hashtable<String,String>alertDetails) throws Throwable{
-			
+
 			String locator_alert_notification_default=objects_objectLocator_alerts.get("Alerts-Notification");
 			String locator_alert_notification=objects_objectLocator_alerts.get("Alerts-Notification");
 			locator_alert_notification=commonMethods.replaceString("status", locator_alert_notification, alertDetails.get("Alerts-Status").toLowerCase());
 			locator_alert_notification=commonMethods.replaceString("alertName", locator_alert_notification, alertDetails.get("Alerts-Title"));
-			
+
 			objects_objectLocator_alerts.put("Alerts-Notification", locator_alert_notification);
 			objects_objectLocator_alerts.put("Alerts-Notification-displayed", locator_alert_notification);
-			
+
 			res=KeyMethods.f_fetchElementDetails(driver, refid, testcasename, workflow, objects_step_alerts.get("Alerts-Notification"), objects_locatorType_alerts, objects_objectType_alerts, objects_objectLocator_alerts, alertDetails.get("Alerts-Title"));
 			objects_objectLocator_alerts.put("Alerts-Notification", locator_alert_notification_default);
-			
+
 		}
-		
+
 		private static void validate_alert_color(WebDriver driver,String refid,String testcasename,String workflow,Hashtable<String,String>alertData) throws Throwable{
 			String locator_alert_notification_tag_default=objects_objectLocator_alerts.get("Alerts-Notification-Tag");
-			
+
 			String locator_alert_notification_tag=objects_objectLocator_alerts.get("Alerts-Notification-displayed")+objects_objectLocator_alerts.get("Alerts-Notification-Tag");
-					
+
 			objects_objectLocator_alerts.put("Alerts-Notification-Tag", locator_alert_notification_tag);
-					
+
 			//Include key as WebElement_Background color in f_fetchelements
 			res=KeyMethods.f_fetchElementDetails(driver, refid, testcasename, workflow, objects_step_alerts.get("Alerts-Notification-Tag"), objects_locatorType_alerts, objects_objectType_alerts, objects_objectLocator_alerts, alertData.get("Color"));
-			
+
 			objects_objectLocator_alerts.put("Alerts-Notification-Tag", locator_alert_notification_tag_default);
 		}
-		
+
 		public static Hashtable<String,String> AsContributor_CreateAlert(WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>data ) throws Throwable{
 			Navigations_CorporateLens.Settings.navigateToSiteContents(driver, workflow);
-			SiteContents.clickAlertsLibrary(driver, workflow);
-			SiteContents.clicknewItem(driver, workflow);
+			SiteContents.clickAlertsLibrary(driver, workflow,testcasename);
+			SiteContents.clicknewItem(driver, workflow,testcasename);
 			Hashtable <String,String> alertdata=createAlert(driver, testcasename, refId, workflow, data);
 			WaitUtil.pause(Constants_TimeOuts.processToAlert);
 			return alertdata;
 		}
-		
+
 		public static void vaidate_AlertInHomePage(WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>alertData,Hashtable<String,String>alerttestData) throws Throwable{
 			Navigations_CorporateLens.navigateToHome(driver);
 			validate_alert(driver, refId, testcasename, workflow, alertData);
 			WaitUtil.pause(Constants_TimeOuts.processToAlert);
 			validate_alert_color(driver, refId, testcasename, workflow, alerttestData);
 		}
-		
+
 	}
-	
-	
+
+
 	//===============================================================================================================
 	// 							                          NewsCarousel
 	//===============================================================================================================
-	
+
 	public static class NewsCarousel{
-		
-		
+
+
 		public static Hashtable<String,String> AsContributor_CreatePage(WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>data ) throws Throwable{
 			Hashtable<String,String> pagedata=new Hashtable<String,String>();
-			
+
 			Navigations_CorporateLens.Newsroom.Articles(driver);
 			WaitUtil.pause(Constants_TimeOuts.Save_TimeOut);
 			Navigations_CorporateLens.Settings.navigateToAddaPage(driver, workflow);
@@ -167,30 +183,30 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 			//Page.check_PageTile(driver, refId, testcasename, workflow, returndata.get("Title")); commented this as crawl will take 15 mins.
 			return pagedata;
 		}
-		
+
 		public static void check_newsCarouselinHomePage(WebDriver driver,String refId,String testcasename,String workflow,String newsCarouselTitle) throws Throwable{
-			
+
 			String locator=objects_objectLocator_NewsCarousel.get("Home Page -NewsCarousel Article");
 			locator=commonMethods.replaceString("tile", locator, newsCarouselTitle);
 			objects_objectLocator_NewsCarousel.put("Home Page -NewsCarousel Article", locator);
 			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Home Page -NewsCarousel Article", objects_locatorType_NewsCarousel, objects_objectType_NewsCarousel, objects_objectLocator_NewsCarousel, newsCarouselTitle);
-					if(res.equals(Constants_FRMWRK.False)){
+			if(res.equals(Constants_FRMWRK.False)){
 				CustomExceptions.Exit(testcasename, objects_step_NewsCarousel.get("Home Page -NewsCarousel Article")+"- Failure", "Please refer above details for more details");
 			}
 		}
-		
+
 		public static void AsContributor_Validate_NewsCarousel(WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>data ) throws Throwable{
 			//Navigations_CorporateLens.navigateToBreadCrumPage(driver, testcasename, workflow, "Excelens Portal");
 			check_newsCarouselinHomePage(driver, refId, testcasename, workflow, data.get("Page Name"));
-			
+
 		}
-		
+
 	}
-	
+
 	//===============================================================================================================
 	// 							                         Blogs
 	//===============================================================================================================
-	
+
 	public static class Blogs{		
 
 		public static Hashtable<String,String> AsContributor_CreatePage(WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>data ) throws Throwable{
@@ -209,7 +225,7 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 
 			return pagedata;
 		}
-		
+
 		public static void check_bloginHomePage(WebDriver driver,String refId,String testcasename,String workflow,String blogTitle) throws Throwable{
 
 			String locator=objects_objectLocator_Blog.get("Home Page -Blog Article");
@@ -220,42 +236,42 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 				CustomExceptions.Exit(testcasename, objects_step_Blog.get("Home Page -Blog Article")+"- Failure", "Please refer above details for more details");
 			}
 		}
-		
+
 		public static void AsContributor_Validate_Blog(WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>data ) throws Throwable{
 			//Navigations_CorporateLens.navigateToBreadCrumPage(driver, testcasename, workflow, "Excelens Portal");
 			check_bloginHomePage(driver, refId, testcasename, workflow, data.get("Page Name"));
-			
+
 		}
 
 	}
-	
+
 
 	//===============================================================================================================
 	// 							                       My Documents
 	//===============================================================================================================
-	
+
 	public static class My_Documents{	
-		
-		
+
+
 		public static Hashtable<String,String> AsContributor_UploadADocument(String site,WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>data ) throws Throwable{
 			Hashtable<String,String> docdata=new Hashtable<String,String>();
 			Navigations_CorporateLens.Settings.navigateToSiteContents(driver, workflow);
-			SiteContents.clickDocumentsLibrary(driver, workflow);
+			SiteContents.clickDocumentsLibrary(driver, workflow,testcasename);
 			res=Documents_EntryPage.uploadADocumentIntoApplication(driver, refId, testcasename, workflow, data);
 			docdata.put("Document Name", res);
 
 			String[] filename=docdata.get("Document Name").split("\\.");
-			driver_CORP.navigate().refresh();
-			DocumentRegisterGridUtil.validateUploadedDocument(driver_CORP, refID, workflow, testcaseName,filename[0] );
+			driver.navigate().refresh();
+			DocumentRegisterGridUtil.validateUploadedDocument(driver, refId, workflow, testcasename,filename[0] );
 			if(site.contains("CorporateSite")){
-				Documents_EntryPage.publishMajorVersion(driver_CORP, refID, local_testcaseName, workflow, data, filename[0], data.get("Major version"));
+				Documents_EntryPage.publishMajorVersion(driver, refId, testcasename, workflow, data, filename[0], data.get("Major version"));
 			}
-			
+
 
 			return docdata;			
 		}
-		
-		
+
+
 
 		public static void AsContributor_check_documentinMyDocumentsWebPart(WebDriver driver,String refId,String testcasename,String workflow,String docName) throws Throwable{
 
@@ -263,11 +279,11 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 			locator=commonMethods.replaceString("documentName", locator, docName);
 			objects_objectLocator_MyDocs.put("Home Page -My Document", locator);
 			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Home Page -My Document", objects_locatorType_MyDocs, objects_objectType_MyDocs, objects_objectLocator_MyDocs, docName);
-		/*	if(res.equals(Constants_FRMWRK.False)){
+			/*	if(res.equals(Constants_FRMWRK.False)){
 				CustomExceptions.Exit(testcasename, objects_step_MyDocs.get("Home Page -My Document")+"- Failure", "Please refer above details for more details");
 			}*/
 		}
-		
+
 		public static void AsNotOwner_check_documentinMyDocumentsWebPart(WebDriver driver,String refId,String testcasename,String workflow,String docName) throws Throwable{
 			String key="Home Page -My Document-Visitor/Other Contributor";
 			String locator=objects_objectLocator_MyDocs.get(key);
@@ -279,6 +295,191 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 			/*if(res.equals(Constants_FRMWRK.False)){
 				CustomExceptions.Exit(testcasename, objects_step_MyDocs.get(key)+"- Failure", "Please refer above details for more details");
 			}*/
+		}
+	}
+
+	//===============================================================================================================
+	// 							                       My Favourites
+	//===============================================================================================================
+
+	public static class My_Favourites{	
+
+		private static void click_MyFavourites(WebDriver driver,String refId,String testcasename,String workflow) throws Throwable{
+			//commonMethods.switchToDefaultPage(driver);
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "My Favourites -Heading", objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, input);
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				CustomExceptions.Exit(testcasename, objects_step_fav.get("My Favourites -Heading")+"-Failure", "Please refer above details for more details");
+			}
+			System.out.println("Clicked favourites....");
+		}
+
+		private static void click_CreateFavourite(WebDriver driver,String refId,String testcasename,String workflow) throws Throwable{
+			ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Create Favourite", objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, input);
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				CustomExceptions.Exit(testcasename, objects_step_fav.get("Create Favourite")+"-Failure", "Please refer above details for more details");
+			}
+		}
+
+		private static void click_Create(WebDriver driver,String refId,String testcasename,String workflow) throws Throwable{
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "My Favourite-Create", objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, input);
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				CustomExceptions.Exit(testcasename, objects_step_fav.get("My Favourite-Create")+"-Failure", "Please refer above details for more details");
+			}
+		}
+		private static void click_Save(WebDriver driver,String refId,String testcasename,String workflow) throws Throwable{
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Favourite-Save", objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, input);
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				CustomExceptions.Exit(testcasename, objects_step_fav.get("Favourite-Save")+"-Failure", "Please refer above details for more details");
+			}
+		}
+
+		public static Hashtable<String,String> AsContributor_AddAdminFavourite(WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>data ) throws Throwable{
+			Hashtable<String,String> favdata=new Hashtable<String,String>();
+			Navigations_CorporateLens.Settings.navigateToSiteContents(driver, workflow);
+			SiteContents.clickAdminFavouriteLibrary(driver, workflow, testcasename);
+			SiteContents.clicknewItem(driver, workflow,testcasename);
+
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Title", objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, data.get("Title")+"-"+DateUtil.getCurrentDateInRequiredDateFormat("dd/MM/yyyy hh:mm:ss"));
+			favdata.put("Title", res);
+
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				CustomExceptions.Exit(testcasename, objects_step_fav.get("Title")+"-Failure", "Please refer above details for more details");
+			}
+
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "URL", objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, data.get("URL"));
+			favdata.put("URL", res);
+
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Description", objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, data.get("Description"));
+			favdata.put("Description", res);
+			Documents_EntryPage.clickSave(driver, refId, testcasename, workflow);
+
+			DocumentRegisterGridUtil.searchAndTickRecord(driver,testcasename, workflow, "Title", ObjRepository.container_AdminFavourites, favdata.get("Title"), 2);
+
+			return favdata;
+
+		}
+
+		public static void check_FavouriteinManagemyfavourites(WebDriver driver,String refId,String testcasename,String workflow,String favouriteTitle) throws Throwable{
+			ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
+
+			String key="Manage My Favourites -Available Items-Favourite";
+			String locator_default=objects_objectLocator_fav.get(key);
+			String locator=objects_objectLocator_fav.get(key);
+			locator=commonMethods.replaceString("tile", locator, favouriteTitle);
+			objects_objectLocator_fav.put(key, locator);
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, key, objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, favouriteTitle);
+			if(res.equals(Constants_FRMWRK.False)){
+				objects_objectLocator_fav.put(key, locator_default);
+				CustomExceptions.Exit(testcasename, objects_step_fav.get(key)+"- Failure", "Please refer above details for more details");
+			}
+			objects_objectLocator_fav.put(key, locator_default);
+		}
+		public static void validate_AdminFavouriteinHomePage(WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>favouriteData) throws Throwable{
+			Navigations_CorporateLens.navigateToHome(driver);
+			WaitUtil.pause(Constants_TimeOuts.generic_TimeOut); // known pause other wise not clicking sometimes.
+			click_MyFavourites(driver, refId, testcasename, workflow);
+			check_FavouriteinManagemyfavourites(driver, refId, testcasename, workflow, favouriteData.get("Title"));
+			ApplicationMethods.closeAllDialogs(driver, refId, testcasename);
+		}
+
+
+		public static Hashtable<String,String> AsOwner_AddMyFavourite(WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>data ) throws Throwable{
+			Hashtable<String,String> favdata=new Hashtable<String,String>();
+			click_MyFavourites(driver, refId, testcasename, workflow);
+			click_CreateFavourite(driver, refId, testcasename, workflow);
+
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "My Favourite-Title", objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, data.get("Title")+"-"+DateUtil.getCurrentDateInRequiredDateFormat("dd/MM/yyyy hh:mm:ss"));
+			favdata.put("Title", res);
+
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				CustomExceptions.Exit(testcasename, objects_step_fav.get("My Favourite-Title")+"-Failure", "Please refer above details for more details");
+			}
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "My Favourite-URL", objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, data.get("URL"));
+			favdata.put("URL", res);
+			click_Create(driver, refId, testcasename, workflow);
+			check_FavouriteinManagemyfavourites(driver, refId, testcasename, workflow, favdata.get("Title"));
+			click_Save(driver, refId, testcasename, workflow);
+			WaitUtil.pause(Constants_TimeOuts.processToComplete_Favourite);
+			return favdata;
+		}
+
+		public static void AsOwner_check_FavouriteinMyFavouritesWebPart(WebDriver driver,String refId,String testcasename,String workflow,String favouriteTitle,String tabTitle) throws Throwable{
+			commonMethods.switchToDefaultPage(driver);
+			String key="Home Page-My Favourites for Owner";
+			ApplicationMethods.validate_homePageLogo(driver, Constants_TimeOuts.Page_TimeOut);
+			String locator_default=objects_objectLocator_fav.get(key);
+			String locator=objects_objectLocator_fav.get(key);
+			locator=commonMethods.replaceString("title", locator, favouriteTitle);
+			objects_objectLocator_fav.put(key, locator);
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, key, objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, favouriteTitle);
+			objects_objectLocator_fav.put(key, locator_default);			
+
+			String current_driver_instance=driver.getWindowHandle();
+			WaitUtil.pause(Constants_TimeOuts.generic_TimeOut);
+			res=commonMethods.getWindowsOrTabsAndValidateTitle(driver,refId,testcasename,workflow,2,tabTitle);
+
+			if(commonMethods.getWindowsOrTabsCount(driver)==1 && !driver.getTitle().equalsIgnoreCase("Home")){
+				driver.navigate().back();
+			}else{
+				driver.switchTo().window(current_driver_instance);
+			}
+
+		}
+		public static void AsNotOwner_check_FavouriteinMyFavouritesWebPart(WebDriver driver,String refId,String testcasename,String workflow,String favouriteTitle) throws Throwable{
+			String key="Home Page-My Favourites for Non Owner";
+			String locator=objects_objectLocator_fav.get(key);
+			locator=commonMethods.replaceString("title", locator, favouriteTitle);
+			objects_objectLocator_fav.put(key, locator);
+			WebElement fetchedElement=null;
+			ElementPresence.check_ElementNotDisplayed(driver, refId, testcasename, workflow, objects_locatorType_fav.get(key), objects_objectType_fav.get(key), objects_objectLocator_fav.get(key), Constants_TimeOuts.Element_optional_TimeOut, fetchedElement);
+
+		}
+	}
+
+	//===============================================================================================================
+	// 							                       My Favourites
+	//===============================================================================================================
+
+	public static class Announcements{	
+
+		public static HashMap<String,String> AsContributor_AddAnnouncement(WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>data ) throws Throwable{
+			HashMap<String, String> announcementdata=new HashMap<String,String>();
+			Navigations_CorporateLens.Settings.navigateToSiteContents(driver, workflow);
+			SiteContents.clickAnnouncementsLibrary(driver, workflow,testcasename);
+			SiteContents.clicknewItem(driver, workflow, testcasename);
+			announcementdata=Page.PageDetails(driver, refId, testcasename, workflow, data);
+
+			DocumentRegisterGridUtil.searchAndTickRecord(driver,testcasename, workflow, "Title", ObjRepository.container_Announcements, announcementdata.get("Page Title"), 2);
+			return announcementdata;			
+		}
+		
+		public static void validate_Announcement_AnnouncementsWebPart(WebDriver driver,String refId,String testcasename,String workflow,HashMap<String,String> announcementdata,Hashtable<String,String>data) throws Throwable{
+			commonMethods.switchToDefaultPage(driver);
+			String key_announcement="Home Page-Announcement";
+			String key_announcementIcon="Home Page-Announcement Emergency icon";
+			String announcementTitle=announcementdata.get("Page Title");
+			
+			
+			
+			ApplicationMethods.validate_homePageLogo(driver, Constants_TimeOuts.Page_TimeOut);
+			String locator_default=objects_objectLocator_announcement.get(key_announcement);
+			String locator=objects_objectLocator_announcement.get(key_announcement);
+			locator=commonMethods.replaceString("title", locator, announcementTitle);
+			objects_objectLocator_announcement.put(key_announcement, locator);
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, key_announcement, objects_locatorType_announcement, objects_objectType_announcement, objects_objectLocator_announcement, announcementTitle);
+			objects_objectLocator_announcement.put(key_announcement, locator_default);	
+			
+			if(data.get("Category").equalsIgnoreCase("Emergency")){
+				locator_default=objects_objectLocator_announcement.get(key_announcementIcon);
+				locator=objects_objectLocator_announcement.get(key_announcementIcon);
+				locator=commonMethods.replaceString("title", locator, announcementTitle);
+				objects_objectLocator_announcement.put(key_announcementIcon, locator);
+				res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, key_announcementIcon, objects_locatorType_announcement, objects_objectType_announcement, objects_objectLocator_announcement, announcementTitle);
+				objects_objectLocator_announcement.put(key_announcementIcon, locator_default);	
+			}
+			
+
 		}
 	}
 }
