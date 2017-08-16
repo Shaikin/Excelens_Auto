@@ -152,7 +152,7 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 		public static Hashtable<String,String> AsContributor_CreateAlert(WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>data ) throws Throwable{
 			Navigations_CorporateLens.Settings.navigateToSiteContents(driver, workflow);
 			SiteContents.clickAlertsLibrary(driver, workflow,testcasename);
-			SiteContents.clicknewItem(driver, workflow,testcasename);
+			SiteContents.clicknewItem(driver, workflow,testcasename,refId);
 			Hashtable <String,String> alertdata=createAlert(driver, testcasename, refId, workflow, data);
 			WaitUtil.pause(Constants_TimeOuts.processToAlert);
 			return alertdata;
@@ -348,7 +348,7 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 			Hashtable<String,String> favdata=new Hashtable<String,String>();
 			Navigations_CorporateLens.Settings.navigateToSiteContents(driver, workflow);
 			SiteContents.clickAdminFavouriteLibrary(driver, workflow, testcasename);
-			SiteContents.clicknewItem(driver, workflow,testcasename);
+			SiteContents.clicknewItem(driver, workflow,testcasename,refId);
 
 			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Title", objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, data.get("Title")+"-"+DateUtil.getCurrentDateInRequiredDateFormat("dd/MM/yyyy hh:mm:ss"));
 			favdata.put("Title", res);
@@ -457,7 +457,7 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 			HashMap<String, String> announcementdata=new HashMap<String,String>();
 			Navigations_CorporateLens.Settings.navigateToSiteContents(driver, workflow);
 			SiteContents.clickAnnouncementsLibrary(driver, workflow,testcasename);
-			SiteContents.clicknewItem(driver, workflow, testcasename);
+			SiteContents.clicknewItem(driver, workflow, testcasename,refId);
 			announcementdata=Page.PageDetails(driver, refId, testcasename, workflow, data);
 
 			DocumentRegisterGridUtil.searchAndTickRecord(driver,testcasename, workflow, "Title", ObjRepository.container_Announcements, announcementdata.get("Page Title"), 2);
