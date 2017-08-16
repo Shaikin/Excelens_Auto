@@ -10,6 +10,7 @@ public class Constants_TimeOuts {
 	final public static int AfterTest_TimeOut=3;
 	final public static int Page_TimeOut=60;
 	final public static int Page_MAX_TimeOut=120;
+	final public static int Page_Load_TimeOut=150;
 	final public static int Jscript_TimeOut=20;
 	final public static int ModalWindowClosure_TimeOut=30;
 	final public static int StaleElement_TimeOut=50;
