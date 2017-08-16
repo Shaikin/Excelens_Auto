@@ -1,10 +1,14 @@
 package com.proj.utilApp;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.frw.Constants.Constants_FRMWRK;
 import com.frw.util.PageLoadWaitUtil;
@@ -114,13 +118,19 @@ public static void O365_loginwithCredentials(WebDriver driver,String username,St
 			Reporting.logStep(driver, refID, "Log In-Sign In", "Sign in exists and but could not clicked due to "+t, Constants_FRMWRK.Fail);
 		}			
 	}
-	
-	boolean islogodisplayed=validate_homePageLogo(driver, Constants_TimeOuts.Page_MAX_TimeOut);
-	if(islogodisplayed==Constants_FRMWRK.FalseB){
-		Reporting.logStep(driver, refID,testcaseName, "IE-Log into the application -0365 User Authenication", "Not able to log into the application with user credentials "+username+"--"+password, Constants_FRMWRK.Fail);
+	boolean isHomePagedisplayed=ExplicitWaitUtil.waitTitle(driver, Constants_TimeOuts.Page_Load_TimeOut, ObjRepository.browserpageTile_Home);
+	if(isHomePagedisplayed==false){
+		Reporting.logStep(driver, refID,testcaseName, "IE-Log into the application -0365 User Authenication", "Home page is not displayed after entering user credentials "+username+"--"+password, Constants_FRMWRK.Fail);
 	}else{
-		Reporting.logStep(driver, refID,testcaseName, "IE-Log into the application -0365 User Authenication", "Successfully able to log into the application with user credentials "+username+"--"+password, Constants_FRMWRK.Pass);
+		boolean islogodisplayed=validate_homePageLogo(driver, Constants_TimeOuts.Page_MAX_TimeOut);
+		if(islogodisplayed==Constants_FRMWRK.FalseB){
+			Reporting.logStep(driver, refID,testcaseName, "IE-Log into the application -0365 User Authenication", "Not able to log into the application with user credentials "+username+"--"+password, Constants_FRMWRK.Fail);
+		}else{
+			Reporting.logStep(driver, refID,testcaseName, "IE-Log into the application -0365 User Authenication", "Successfully able to log into the application with user credentials "+username+"--"+password, Constants_FRMWRK.Pass);
+		}
+
 	}
+	
 	
 }
 
@@ -597,4 +607,25 @@ public static void O365_loginwithCredentials(WebDriver driver,String username,St
 		}
 		return flag;
 	}
+	
+	public static void waitForLoad(WebDriver driver) {
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+       
+		ExpectedCondition<Boolean> expectation = new
+                ExpectedCondition<Boolean>() {
+                    public Boolean apply(WebDriver driver) {
+                        return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+                    }
+                };
+        try {
+            Thread.sleep(1000);
+            WebDriverWait wait = new WebDriverWait(driver, 120);
+            wait.until(expectation);
+        } catch (Throwable error) {
+            System.err.println("Timeout waiting for Page Load Request to complete.");
+        }
+		
+		
+        driver.manage().timeouts().implicitlyWait(Constants_TimeOuts.Implicit_Element_TimeOut, TimeUnit.SECONDS);
+    }
 }
