@@ -178,7 +178,7 @@ public class Page extends TestSuiteBase {
 		ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
 		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Browse", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, input);
 		ApplicationMethods.waitForOverlayToDisappear(driver);
-		WaitUtil.pause(Constants_TimeOuts.generic_TimeOut);
+		WaitUtil.pause(Constants_TimeOuts.sync_element_load);
 		ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
 		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Add Image from Local", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, input);
 		ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
@@ -196,7 +196,7 @@ public class Page extends TestSuiteBase {
 		}else{
 			ApplicationMethods.closeAllDialogswithCancel(driver, refId, testcasename);
 		}
-		WaitUtil.pause(Constants_TimeOuts.Save_TimeOut);
+		WaitUtil.pause(Constants_TimeOuts.sync_element_load);
 		ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
 		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Browsed Image Path", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, input);
 		pageData.put("Browsed Image Path", res);
@@ -209,10 +209,14 @@ public class Page extends TestSuiteBase {
 		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Enable Comments", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, data.get("Enable Comments"));
 		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Make Article featured?", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, data.get("Make Article featured?"));
 		clickSavepage(driver, refId, testcasename, workflow);
-		WaitUtil.pause(Constants_TimeOuts.Save_TimeOut);
+//WaitUtil.pause(Constants_TimeOuts.sync_element_load);
+		ApplicationMethods.waitForLoad(driver);
+		commonMethods.switchToDefaultPage(driver);
 		clickCheckItIn(driver, refId, testcasename, workflow);
 		CheckInDetails(driver, refId, testcasename, workflow, data.get("Check it -Comments"));
-		WaitUtil.pause(Constants_TimeOuts.Save_TimeOut);
+//WaitUtil.pause(Constants_TimeOuts.sync_element_load);
+		ApplicationMethods.waitForLoad(driver);
+		commonMethods.switchToDefaultPage(driver);
 		clickPublishIt(driver, refId, testcasename, workflow);
 		
 		return pageData;
@@ -244,7 +248,7 @@ public class Page extends TestSuiteBase {
 		ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
 		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Browse", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, input);
 		ApplicationMethods.waitForOverlayToDisappear(driver);
-		WaitUtil.pause(Constants_TimeOuts.generic_TimeOut);
+		WaitUtil.pause(Constants_TimeOuts.sync_element_load);
 		ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
 		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Add Image from Local", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, input);
 		ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
@@ -262,13 +266,14 @@ public class Page extends TestSuiteBase {
 		}else{
 			ApplicationMethods.closeAllDialogswithCancel(driver, refId, testcasename);
 		}
-		WaitUtil.pause(Constants_TimeOuts.Save_TimeOut);
+		WaitUtil.pause(Constants_TimeOuts.sync_element_load);
 		ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
 		res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Browsed Image Path", objects_locatorType_page, objects_objectType_page, objects_objectLocator_page, input);
 		pageData.put("Browsed Image Path", res);
 		Documents_EntryPage.clickOK(driver, refId, testcasename, workflow);
 		
 		Documents_EntryPage.clickSave(driver, refId, testcasename, workflow);
+		ApplicationMethods.waitForLoad(driver);
 		return pageData;
 		
 	}
