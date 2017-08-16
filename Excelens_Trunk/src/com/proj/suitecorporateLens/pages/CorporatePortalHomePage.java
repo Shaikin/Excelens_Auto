@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 
 import com.frw.Constants.Constants_FRMWRK;
 import com.frw.util.DateUtil;
+import com.frw.util.NumberConversionUtil;
 import com.frw.util.WaitUtil;
 import com.frw.util.Xls_Reader;
 import com.proj.Constants.Constants;
@@ -56,12 +57,18 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 	private static Hashtable<String,String>objects_locatorType_fav=null; 
 	private static Hashtable<String,String>objects_objectType_fav=null;
 	private static Hashtable<String,String>objects_objectLocator_fav=null;
-	
+
 	@SuppressWarnings("unused")
 	private static Hashtable<String,String>objects_step_announcement=null;
 	private static Hashtable<String,String>objects_locatorType_announcement=null; 
 	private static Hashtable<String,String>objects_objectType_announcement=null;
 	private static Hashtable<String,String>objects_objectLocator_announcement=null;
+
+
+	private static Hashtable<String,String>objects_step_calendar=null;
+	private static Hashtable<String,String>objects_locatorType_calendar=null; 
+	private static Hashtable<String,String>objects_objectType_calendar=null;
+	private static Hashtable<String,String>objects_objectLocator_calendar=null;
 
 
 	static {		
@@ -73,6 +80,7 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_MyDocuments", "MyDocs");
 			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_Favourites", "fav");
 			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_Announcements", "announcement");
+			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_Calendar", "calendar");
 
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -171,27 +179,27 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 			Hashtable<String,String> pagedata=new Hashtable<String,String>();
 
 			Navigations_CorporateLens.Newsroom.Articles(driver);
-			WaitUtil.pause(Constants_TimeOuts.Save_TimeOut);
+			WaitUtil.pause(Constants_TimeOuts.sync_element_load);
 			Navigations_CorporateLens.Settings.navigateToAddaPage(driver, workflow);
-			WaitUtil.pause(Constants_TimeOuts.Save_TimeOut);
+			WaitUtil.pause(Constants_TimeOuts.sync_element_load);
 			res=Page.enterPageName(driver, refId, testcasename, workflow, data.get("Page Name")+"-"+DateUtil.getCurrentDateInRequiredDateFormat("ddMMyyyy hhmmss"));
 			pagedata.put("Page Name", res);
 			Page.clickCreate(driver, refId, testcasename, workflow);
 			commonMethods.switchToDefaultPage(driver);
-			WaitUtil.pause(5);
+			WaitUtil.pause(Constants_TimeOuts.sync_element_load);
 			Page.PageDetails(driver, refId, testcasename, workflow, data,res);				
 			//Page.check_PageTile(driver, refId, testcasename, workflow, returndata.get("Title")); commented this as crawl will take 15 mins.
 			return pagedata;
 		}
 
 		public static void check_newsCarouselinHomePage(WebDriver driver,String refId,String testcasename,String workflow,String newsCarouselTitle) throws Throwable{
-
-			String locator=objects_objectLocator_NewsCarousel.get("Home Page -NewsCarousel Article");
+			String step="Home Page -NewsCarousel Article";
+			String locator=objects_objectLocator_NewsCarousel.get(step);
 			locator=commonMethods.replaceString("tile", locator, newsCarouselTitle);
-			objects_objectLocator_NewsCarousel.put("Home Page -NewsCarousel Article", locator);
-			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Home Page -NewsCarousel Article", objects_locatorType_NewsCarousel, objects_objectType_NewsCarousel, objects_objectLocator_NewsCarousel, newsCarouselTitle);
+			objects_objectLocator_NewsCarousel.put(step, locator);
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_NewsCarousel, objects_objectType_NewsCarousel, objects_objectLocator_NewsCarousel, newsCarouselTitle);
 			if(res.equals(Constants_FRMWRK.False)){
-				CustomExceptions.Exit(testcasename, objects_step_NewsCarousel.get("Home Page -NewsCarousel Article")+"- Failure", "Please refer above details for more details");
+				CustomExceptions.Exit(testcasename, objects_step_NewsCarousel.get(step)+"- Failure", "Please refer above details for more details");
 			}
 		}
 
@@ -227,13 +235,13 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 		}
 
 		public static void check_bloginHomePage(WebDriver driver,String refId,String testcasename,String workflow,String blogTitle) throws Throwable{
-
-			String locator=objects_objectLocator_Blog.get("Home Page -Blog Article");
+			String step="Home Page -Blog Article";
+			String locator=objects_objectLocator_Blog.get(step);
 			locator=commonMethods.replaceString("tile", locator, blogTitle);
-			objects_objectLocator_Blog.put("Home Page -Blog Article", locator);
-			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Home Page -Blog Article", objects_locatorType_Blog, objects_objectType_Blog, objects_objectLocator_Blog, blogTitle);
+			objects_objectLocator_Blog.put(step, locator);
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_Blog, objects_objectType_Blog, objects_objectLocator_Blog, blogTitle);
 			if(res.equals(Constants_FRMWRK.False)){
-				CustomExceptions.Exit(testcasename, objects_step_Blog.get("Home Page -Blog Article")+"- Failure", "Please refer above details for more details");
+				CustomExceptions.Exit(testcasename, objects_step_Blog.get(step)+"- Failure", "Please refer above details for more details");
 			}
 		}
 
@@ -285,12 +293,12 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 		}
 
 		public static void AsNotOwner_check_documentinMyDocumentsWebPart(WebDriver driver,String refId,String testcasename,String workflow,String docName) throws Throwable{
-			String key="Home Page -My Document-Visitor/Other Contributor";
-			String locator=objects_objectLocator_MyDocs.get(key);
+			String step="Home Page -My Document-Visitor/Other Contributor";
+			String locator=objects_objectLocator_MyDocs.get(step);
 			locator=commonMethods.replaceString("documentName", locator, docName);
-			objects_objectLocator_MyDocs.put(key, locator);
+			objects_objectLocator_MyDocs.put(step, locator);
 			WebElement fetchedElement=null;
-			ElementPresence.check_ElementNotDisplayed(driver, refId, testcasename, workflow, objects_locatorType_MyDocs.get(key), objects_objectType_MyDocs.get(key), objects_objectLocator_MyDocs.get(key), Constants_TimeOuts.Element_optional_TimeOut, fetchedElement);
+			ElementPresence.check_ElementNotDisplayed(driver, refId, testcasename, workflow, objects_locatorType_MyDocs.get(step), objects_objectType_MyDocs.get(step), objects_objectLocator_MyDocs.get(step), Constants_TimeOuts.Element_optional_TimeOut, fetchedElement);
 			//res=KeyMethods.f_fetchElementDetails(driver, refId, testcasename, workflow, key, objects_locatorType_MyDocs, objects_objectType_MyDocs, objects_objectLocator_MyDocs, docName);
 			/*if(res.equals(Constants_FRMWRK.False)){
 				CustomExceptions.Exit(testcasename, objects_step_MyDocs.get(key)+"- Failure", "Please refer above details for more details");
@@ -305,32 +313,34 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 	public static class My_Favourites{	
 
 		private static void click_MyFavourites(WebDriver driver,String refId,String testcasename,String workflow) throws Throwable{
-			//commonMethods.switchToDefaultPage(driver);
-			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "My Favourites -Heading", objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, input);
+			String step="My Favourites -Heading";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, input);
 			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
-				CustomExceptions.Exit(testcasename, objects_step_fav.get("My Favourites -Heading")+"-Failure", "Please refer above details for more details");
-			}
-			System.out.println("Clicked favourites....");
+				CustomExceptions.Exit(testcasename, objects_step_fav.get(step)+"-Failure", "Please refer above details for more details");
+			}			
 		}
 
 		private static void click_CreateFavourite(WebDriver driver,String refId,String testcasename,String workflow) throws Throwable{
+			String step="Create Favourite";
 			ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
-			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Create Favourite", objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, input);
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow,step , objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, input);
 			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
-				CustomExceptions.Exit(testcasename, objects_step_fav.get("Create Favourite")+"-Failure", "Please refer above details for more details");
+				CustomExceptions.Exit(testcasename, objects_step_fav.get(step)+"-Failure", "Please refer above details for more details");
 			}
 		}
 
 		private static void click_Create(WebDriver driver,String refId,String testcasename,String workflow) throws Throwable{
-			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "My Favourite-Create", objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, input);
+			String step="My Favourite-Create";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, input);
 			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
-				CustomExceptions.Exit(testcasename, objects_step_fav.get("My Favourite-Create")+"-Failure", "Please refer above details for more details");
+				CustomExceptions.Exit(testcasename, objects_step_fav.get(step)+"-Failure", "Please refer above details for more details");
 			}
 		}
 		private static void click_Save(WebDriver driver,String refId,String testcasename,String workflow) throws Throwable{
-			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, "Favourite-Save", objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, input);
+			String step="Favourite-Save";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow,step , objects_locatorType_fav, objects_objectType_fav, objects_objectLocator_fav, input);
 			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
-				CustomExceptions.Exit(testcasename, objects_step_fav.get("Favourite-Save")+"-Failure", "Please refer above details for more details");
+				CustomExceptions.Exit(testcasename, objects_step_fav.get(step)+"-Failure", "Please refer above details for more details");
 			}
 		}
 
@@ -438,7 +448,7 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 	}
 
 	//===============================================================================================================
-	// 							                       My Favourites
+	// 							                       Announcements
 	//===============================================================================================================
 
 	public static class Announcements{	
@@ -453,15 +463,15 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 			DocumentRegisterGridUtil.searchAndTickRecord(driver,testcasename, workflow, "Title", ObjRepository.container_Announcements, announcementdata.get("Page Title"), 2);
 			return announcementdata;			
 		}
-		
+
 		public static void validate_Announcement_AnnouncementsWebPart(WebDriver driver,String refId,String testcasename,String workflow,HashMap<String,String> announcementdata,Hashtable<String,String>data) throws Throwable{
 			commonMethods.switchToDefaultPage(driver);
 			String key_announcement="Home Page-Announcement";
 			String key_announcementIcon="Home Page-Announcement Emergency icon";
 			String announcementTitle=announcementdata.get("Page Title");
-			
-			
-			
+
+
+
 			ApplicationMethods.validate_homePageLogo(driver, Constants_TimeOuts.Page_TimeOut);
 			String locator_default=objects_objectLocator_announcement.get(key_announcement);
 			String locator=objects_objectLocator_announcement.get(key_announcement);
@@ -469,7 +479,7 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 			objects_objectLocator_announcement.put(key_announcement, locator);
 			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, key_announcement, objects_locatorType_announcement, objects_objectType_announcement, objects_objectLocator_announcement, announcementTitle);
 			objects_objectLocator_announcement.put(key_announcement, locator_default);	
-			
+
 			if(data.get("Category").equalsIgnoreCase("Emergency")){
 				locator_default=objects_objectLocator_announcement.get(key_announcementIcon);
 				locator=objects_objectLocator_announcement.get(key_announcementIcon);
@@ -478,8 +488,229 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 				res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, key_announcementIcon, objects_locatorType_announcement, objects_objectType_announcement, objects_objectLocator_announcement, announcementTitle);
 				objects_objectLocator_announcement.put(key_announcementIcon, locator_default);	
 			}
-			
+
 
 		}
+	}
+
+	//===============================================================================================================
+	// 							                       Announcements
+	//===============================================================================================================
+
+	public static class Calendar{	
+		private static void click_Calendar(WebDriver driver,String refId,String testcasename,String workflow) throws Throwable{
+			String step="Calendar -Heading";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, input);
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				CustomExceptions.Exit(testcasename, objects_step_calendar.get(step)+"-Failure", "Please refer above details for more details");
+			}			
+		}
+		private static void click_Add(WebDriver driver,String refId,String testcasename,String workflow) throws Throwable{
+			String step="Calendar-Add";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, input);
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				CustomExceptions.Exit(testcasename, objects_step_calendar.get(step)+"-Failure", "Please refer above details for more details");
+			}
+			ApplicationMethods.waitForOverlayToDisappear(driver);
+		}			
+		private static String selectDate(WebDriver driver,String refId,String testcasename,String workflow) throws Throwable{
+
+			String key="Calendar -Date for Event";
+			String locator_default=objects_objectLocator_calendar.get(key);
+			String locator=objects_objectLocator_calendar.get(key);
+			String date=DateUtil.getCurrentDateInRequiredDateFormat("d/MM/yyyy");
+			locator=commonMethods.replaceString("eventDate", locator, date);
+			objects_objectLocator_calendar.put(key, locator);
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, key, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, input);
+			if(res.equals(Constants_FRMWRK.False)){
+				objects_objectLocator_calendar.put(key, locator_default);
+				CustomExceptions.Exit(testcasename, objects_step_calendar.get(key)+"- Failure", "Please refer above details for more details");
+			}
+			objects_objectLocator_calendar.put(key, locator_default);
+			return date;	
+
+		}
+		private static void click_newitems(WebDriver driver,String refId,String testcasename,String workflow) throws Throwable{
+			String step="Calendar Event- more item";
+			boolean isMoreItemDisplayed=true;
+			WebElement element;
+
+			isMoreItemDisplayed=ElementPresence.isElementDisplayed(driver, objects_locatorType_calendar.get(step), objects_objectLocator_calendar.get(step), Constants_TimeOuts.Element_optional_TimeOut);
+			while (isMoreItemDisplayed==true){
+				element=ElementPresence.elementDisplayed(driver, objects_locatorType_calendar.get(step), objects_objectLocator_calendar.get(step), Constants_TimeOuts.Element_optional_TimeOut);
+				commonMethods.actionsClick(driver, element);
+				isMoreItemDisplayed=ElementPresence.isElementDisplayed(driver, objects_locatorType_calendar.get(step), objects_objectLocator_calendar.get(step), Constants_TimeOuts.Element_optional_TimeOut);
+			}
+
+		}
+
+		private static HashMap<String, String> calenderEventDetails(WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>data) throws Throwable{
+			HashMap<String, String> eventData=new HashMap<String,String>();
+
+			ApplicationMethods.switchToLatestDLGframe(driver, testcasename);
+			String step="Calender Event-Title";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, data.get("Title")+"-"+DateUtil.getCurrentDateInRequiredDateFormat("ddMMyyyy hhmmss"));
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				CustomExceptions.Exit(testcasename, objects_step_calendar.get(step)+"-Failure", "Please refer above details for more details");
+			}	
+			eventData.put("Title", res);
+
+			step="Calendar Event-Location";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, data.get("Location"));
+			eventData.put("Location", res);
+
+			step="Calendar Event-Start Time";
+			String date=DateUtil.getCurrentDateInRequiredDateFormat("d/MM/yyyy");
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, date);
+			eventData.put("Start Time", res);
+
+			step="Calendar Event-End Time";
+			date=DateUtil.getCurrentDateInRequiredDateFormat("d/MM/yyyy");
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, date);
+			eventData.put("End Time", res);
+
+			step="Calendar Event-Start Hours";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, data.get("Start Hours"));
+			eventData.put("Start Hours", res);
+
+			step="Calendar Event-End Hours";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, data.get("End Hours"));
+			eventData.put("End Hours", res);
+
+			step="Calendar Event-Description";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, data.get("Description"));
+			eventData.put("Description", res);
+
+			step="Calendar Event-Category ";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, data.get("Category"));
+
+			step="Calendar Event-Category option";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, data.get("Category Option"));
+			eventData.put("Category Option", res);
+
+			step="Calendar Event-All Day Event";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, data.get("All Day Event"));
+			eventData.put("All Day Event", res);
+
+			step="Calendar Event-Recurrence";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, data.get("Recurrence"));
+			eventData.put("Recurrence", res);
+
+			step="Calendar Event-Event Page";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, data.get("Event Page"));
+			eventData.put("Event Page", res);				
+
+			Documents_EntryPage.clickSave(driver, refId, testcasename, workflow);
+			return eventData;
+		}
+
+		public static HashMap<String,String> AsContributor_AddCalendarEvent(WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>data ) throws Throwable{
+			HashMap<String, String> eventdata=new HashMap<String,String>();
+
+			click_Calendar(driver, refId, testcasename, workflow);
+			String date=selectDate(driver, refId, testcasename, workflow);
+
+			click_Add(driver, refId, testcasename, workflow);
+			eventdata=calenderEventDetails(driver, refId, testcasename, workflow, data);
+			eventdata.put("event date", date);
+			return eventdata;
+
+		}
+
+		public static void AsContributor_Validate_Event_InCalendar(WebDriver driver,String refId,String testcasename,String workflow,HashMap<String,String>data ) throws Throwable{
+			commonMethods.switchToDefaultPage(driver);
+			click_newitems(driver, refId, testcasename, workflow);
+
+			String step="Calendar Event in Calendar";
+			String locator_default=objects_objectLocator_calendar.get(step);
+			String locator=objects_objectLocator_calendar.get(step);
+
+			String[] srthrs=commonMethods.splitString(data.get("Start Hours"), " ");
+			String st=NumberConversionUtil.convertToDecimals("DOUBLEDECIMAL", srthrs[0]);				
+			locator=commonMethods.replaceString("starthours", locator, st+" "+srthrs[1]);
+
+			String[] endhrs=commonMethods.splitString(data.get("End Hours"), " ");
+			String end=NumberConversionUtil.convertToDecimals("DOUBLEDECIMAL", endhrs[0]);	
+
+			locator=commonMethods.replaceString("endhours", locator, end+" "+endhrs[1]);
+			locator=commonMethods.replaceString("tile", locator, data.get("Title"));
+
+			locator=commonMethods.replaceString("\\.00", locator, ":00");
+
+			objects_objectLocator_calendar.put(step, locator);
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, input);
+			objects_objectLocator_calendar.put(step, locator_default);	
+
+
+		}
+		
+		
+		public static void validate_Event_CalendarWebPart(WebDriver driver,String refId,String testcasename,String workflow,HashMap<String,String>eventdata ) throws Throwable{
+			commonMethods.switchToDefaultPage(driver);
+			
+			String step="Home Page-Calendar Event";
+			String locator_default=objects_objectLocator_calendar.get(step);
+			String locator=objects_objectLocator_calendar.get(step);
+			String EventTitle=eventdata.get("Title");
+
+			locator=commonMethods.replaceString("title", locator, EventTitle);			
+			objects_objectLocator_calendar.put(step, locator);
+			
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, input);
+			
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				objects_objectLocator_calendar.put(step, locator_default);	
+				CustomExceptions.Exit(testcasename, objects_step_calendar.get(step)+"-Failure", "Please refer above details for more details");
+			}
+			objects_objectLocator_calendar.put(step, locator_default);	
+			
+			//----- Day
+			step="Home Page-Calendar Day Icon";
+			locator_default=objects_objectLocator_calendar.get(step);
+			locator=objects_objectLocator_calendar.get(step);
+			EventTitle=eventdata.get("Title");
+			String startTime=eventdata.get("Start Time");
+			String srtDay=DateUtil.converttoRequiredDateFormat("d/MM/yyyy", "dd", startTime);
+			
+			locator=commonMethods.replaceString("title", locator, EventTitle);
+			locator=commonMethods.replaceString("startday", locator, srtDay);
+			
+			objects_objectLocator_calendar.put(step, locator);
+			
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, input);
+			
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				objects_objectLocator_calendar.put(step, locator_default);	
+				CustomExceptions.Exit(testcasename, objects_step_calendar.get(step)+"-Failure", "Please refer above details for more details");
+			}
+			objects_objectLocator_calendar.put(step, locator_default);
+			
+			//----- Month
+			step="Home Page-Calendar Day Icon";
+			locator_default=objects_objectLocator_calendar.get(step);
+			locator=objects_objectLocator_calendar.get(step);
+			EventTitle=eventdata.get("Title");
+			startTime=eventdata.get("Start Time");
+			String srtMonth=DateUtil.converttoRequiredDateFormat("d/MM/yyyy", "MMM", startTime);
+
+			locator=commonMethods.replaceString("title", locator, EventTitle);
+			locator=commonMethods.replaceString("startday", locator, srtMonth);
+			
+			objects_objectLocator_calendar.put(step, locator);
+			
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_calendar, objects_objectType_calendar, objects_objectLocator_calendar, input);
+			
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				objects_objectLocator_calendar.put(step, locator_default);	
+				CustomExceptions.Exit(testcasename, objects_step_calendar.get(step)+"-Failure", "Please refer above details for more details");
+			}
+			objects_objectLocator_calendar.put(step, locator_default);
+			
+			
+			
+
+
+		}
+
 	}
 }
