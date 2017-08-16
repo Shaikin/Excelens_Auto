@@ -20,7 +20,7 @@ public class ObjRepository {
 	
 	//Overlays
 	public static String heading_working=".//*[@title='Working on it...']";
-	public static String overlay_working=".//*[text()='Working on it...']";
+	public static String overlay_working="//*[@class='ms-core-pageTitle ms-accentText' and text()='Working on it...']";
 	public static String spinner_pleasewait="//*[@class='loader']";
 
 	//logout objects
@@ -80,6 +80,13 @@ public class ObjRepository {
 	public static final String pageTile_DocumentRegister=".//*[text()='Document Register']";
 	public static final String pageTile_siteContents=".//*[text()='Site contents']";
 	public static final String pageTile_Alerts=".//*[text()='Alerts']";
+	public static final String pageTile_Announcements=".//*[@title='Announcements']";
+	
+	//Browser Page title
+	public static final String browserpageTile_Home="Home";
+	public static final String browserpageTile_AdminFavourites_AllItems="Admin Favourites - All Items";
+	public static final String browserpageTile_Announcement_AllItems="Announcements - All Items";
+	
 
 	//Search components 
 	public static String search_inlineSearch=".//*[@id='inplaceSearchDiv_WPQ1_lsinput']";
