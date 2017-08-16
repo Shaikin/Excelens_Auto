@@ -10,13 +10,16 @@ import org.openqa.selenium.WebDriver;
 
 import com.frw.Constants.Constants_FRMWRK;
 import com.frw.util.Xls_Reader;
+import com.frw.wait.ExplicitWaitUtil;
 import com.proj.Constants.Constants;
+import com.proj.Constants.Constants_TimeOuts;
 import com.proj.library.KeyMethods;
 import com.proj.library.commonMethods;
+import com.proj.objectRepository.ObjRepository;
 import com.proj.suiteDOCS.TestSuiteBase;
-import com.proj.suiteTRANSMITTALS.pages.Transmittals_EntryPage;
 import com.proj.util.CustomExceptions;
 import com.proj.util.fetchObjectRepository;
+import com.proj.utilApp.ApplicationMethods;
 import com.report.reporter.Reporting;
 
 public class SiteContents extends TestSuiteBase {
@@ -32,7 +35,6 @@ public class SiteContents extends TestSuiteBase {
 	private static Hashtable<String,String>objects_objectType_SiteContents=null;
 	private static Hashtable<String,String>objects_objectLocator_SiteContents=null;
 
-	@SuppressWarnings("unused")
 	private static Hashtable<String,String>objects_step_App=null;
 	private static Hashtable<String,String>objects_locatorType_App=null; 
 	private static Hashtable<String,String>objects_objectType_App=null;
@@ -51,7 +53,7 @@ public class SiteContents extends TestSuiteBase {
 	}
 	public static void addAnApp(WebDriver driver,String workFlow,String testcasename) throws Exception{
 		String key="Add an app";
-		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow,key , objects_locatorType_SiteContents, objects_objectType_SiteContents, objects_objectLocator_SiteContents, input);
+		res=KeyMethods.f_performAction(driver, refID, testcasename, workFlow,key , objects_locatorType_SiteContents, objects_objectType_SiteContents, objects_objectLocator_SiteContents, input);
 
 		if(res.equals(Constants_FRMWRK.False)){
 			CustomExceptions.Exit(testcasename, objects_step_SiteContents.get(key)+"- Failure", "Please refer above details for more details");
@@ -61,9 +63,9 @@ public class SiteContents extends TestSuiteBase {
 
 	public static void clickAlertsLibrary(WebDriver driver,String workFlow,String testcasename) throws Throwable{
 		String key="Alerts Library";
-		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow,key , objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
+		res=KeyMethods.f_performAction(driver, refID, testcasename, workFlow,key , objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
 		if(res.equals(Constants_FRMWRK.False)){
-			CustomExceptions.Exit(testcasename, objects_step_SiteContents.get(key)+"- Failure", "Please refer above details for more details");
+			CustomExceptions.Exit(testcasename, objects_step_App.get(key)+"- Failure", "Please refer above details for more details");
 		}			
 		commonMethods.switchToDefaultPage(driver);
 		commonMethods.pageLoadWait(driver);
@@ -72,9 +74,9 @@ public class SiteContents extends TestSuiteBase {
 	public static void clickDocumentsLibrary(WebDriver driver,String workFlow,String testcasename) throws Throwable{
 		String key="Documents Library";
 		
-		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, key, objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
+		res=KeyMethods.f_performAction(driver, refID, testcasename, workFlow, key, objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
 		if(res.equals(Constants_FRMWRK.False)){
-			CustomExceptions.Exit(testcasename, objects_step_SiteContents.get(key)+"- Failure", "Please refer above details for more details");
+			CustomExceptions.Exit(testcasename, objects_step_App.get(key)+"- Failure", "Please refer above details for more details");
 		}			
 		commonMethods.switchToDefaultPage(driver);
 		commonMethods.pageLoadWait(driver);
@@ -83,23 +85,21 @@ public class SiteContents extends TestSuiteBase {
 	public static void clickAdminFavouriteLibrary(WebDriver driver,String workFlow,String testcasename) throws Throwable{
 		String key="Admin Favourites Library";
 		
-		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, key, objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
+		res=KeyMethods.f_performAction(driver, refID, testcasename, workFlow, key, objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
 		if(res.equals(Constants_FRMWRK.False)){
-			CustomExceptions.Exit(testcasename, objects_step_SiteContents.get(key)+"- Failure", "Please refer above details for more details");
+			CustomExceptions.Exit(testcasename, objects_step_App.get(key)+"- Failure", "Please refer above details for more details");
 		}			
-		commonMethods.switchToDefaultPage(driver);
-		commonMethods.pageLoadWait(driver);
+		ExplicitWaitUtil.waitTitle(driver, Constants_TimeOuts.Page_Load_TimeOut, ObjRepository.browserpageTile_AdminFavourites_AllItems);
 	}
 	
 	public static void clickAnnouncementsLibrary(WebDriver driver,String workFlow,String testcasename) throws Throwable{
 		String key="Announcements Library";
 		
-		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow, key, objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
+		res=KeyMethods.f_performAction(driver, refID, testcasename, workFlow, key, objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
 		if(res.equals(Constants_FRMWRK.False)){
-			CustomExceptions.Exit(testcasename, objects_step_SiteContents.get(key)+"- Failure", "Please refer above details for more details");
+			CustomExceptions.Exit(testcasename, objects_step_App.get(key)+"- Failure", "Please refer above details for more details");
 		}			
-		commonMethods.switchToDefaultPage(driver);
-		commonMethods.pageLoadWait(driver);
+		ExplicitWaitUtil.waitTitle(driver, Constants_TimeOuts.Page_Load_TimeOut, ObjRepository.browserpageTile_Announcement_AllItems);
 	}
 
 	/**
@@ -110,14 +110,14 @@ public class SiteContents extends TestSuiteBase {
 	 * @param workFlow
 	 * @throws Throwable
 	 */
-	public static void clicknewItem(WebDriver driver,String workFlow,String testcasename) throws Throwable{
-		String key="new item";
+	public static void clicknewItem(WebDriver driver,String workFlow,String testcasename,String refid) throws Throwable{
+		String key="new item";		
+		res=KeyMethods.f_performAction(driver, refid, testcasename, workFlow,key , objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
 		
-		res=KeyMethods.f_performAction(driver, refID, testcaseName, workFlow,key , objects_locatorType_App, objects_objectType_App, objects_objectLocator_App, input);
 		if(res.equals(Constants_FRMWRK.False)){
-			CustomExceptions.Exit(testcasename, objects_step_SiteContents.get(key)+"- Failure", "Please refer above details for more details");
+			CustomExceptions.Exit(testcasename, objects_step_App.get(key)+"- Failure", "Please refer above details for more details");
 		}
-		Transmittals_EntryPage.waitInvisiblilityofWorkingTitle(driver);
+		ApplicationMethods.waitForLoad(driver);
 
 	}
 
