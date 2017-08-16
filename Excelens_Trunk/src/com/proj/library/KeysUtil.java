@@ -53,6 +53,14 @@ public class KeysUtil extends KeyMethods{
 		Step=workFlow+generic_Step+Step;
 
 		try{
+			if(element!=null){
+				try {
+					element=ExplicitWaitUtil.waitForElementTobeActionable(driver, locatorType, objectLocator, Constants_TimeOuts.Element_TimeOut);
+				} catch (Throwable e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			element.clear();		
 			element.sendKeys(input);								    					
 			logsObj.log(testcaseName+"--> "+objectLocator+" exists and the value entered is "+input);
@@ -968,7 +976,7 @@ public class KeysUtil extends KeyMethods{
 		return flag;
 	}
 
-	protected static String moveToElement(WebDriver driver,String refID,String testcaseName,String workFlow,String Step,String locatorType, String objectType, String objectLocator,String input,WebElement element){
+	protected static String moveToElementAndClick(WebDriver driver,String refID,String testcaseName,String workFlow,String Step,String locatorType, String objectType, String objectLocator,String input,WebElement element){
 		String flag=Constants_FRMWRK.False;
 		String generic_Step="Move To Element & Click on ";
 		Step=workFlow+generic_Step+Step;
@@ -1058,6 +1066,35 @@ public class KeysUtil extends KeyMethods{
 		}
 		return flag;
 
+	}
+	
+	protected static String moveToElement(WebDriver driver,String refID,String testcaseName,String workFlow,String Step,String locatorType, String objectType, String objectLocator,String input,WebElement element){
+		String flag=Constants_FRMWRK.False;
+		String generic_Step="Move To Element & Click on ";
+		Step=workFlow+generic_Step+Step;
+
+		try{
+			Actions act=new Actions(driver);
+			act.moveToElement(element).build().perform();
+			logsObj.log(testcaseName+"-->"+objectLocator+" exists and Mouseover ");
+			Reporting.logStep(driver, refID, Step,  objectType+": "+objectLocator+" exists and Mouseover  ", Constants_FRMWRK.Pass);
+			flag=Constants_FRMWRK.True;
+		}catch(StaleElementReferenceException ex){
+			logsObj.log("Button-Encountered stale exception for "+objectLocator+" So trying for recovery..");
+			/*int count=StaleElementHandleAndClick(driver,identifyBy,objectLocator);
+			if(count<4){
+				Reporting.logStep(driver, refID, Step,  objectType+": "+objectLocator+" exists and clicked after recovering stale exception ", Constants_FRMWRK.Warning);
+			}*/
+			//flag=KeyMethods.staleRecovery_Click(driver, Step, locatorType, objectLocator, Constants_TimeOuts.StaleElement_TimeOut);
+			moveToElement(driver, refID, testcaseName, workFlow, generic_Step, locatorType, objectType, objectLocator, input, element);
+		}
+
+		try {
+			PageLoadWaitUtil.waitForPageToLoad(driver);
+		} catch (Throwable e) {				
+			//e.printStackTrace();
+		}
+		return flag;
 	}
 
 }
