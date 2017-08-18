@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -236,6 +237,7 @@ public class commonMethods extends TestBase{
 
 		logsObj.log("Sucessfully switched to default frame..Next is "+frameName+" frame..");
 		try{
+			driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 			WebDriverWait wait = new WebDriverWait(driver, Constants_TimeOuts.frame_MAX_TimeOut);
 			wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.xpath(frameName)));
 			//driver.switchTo().frame(ElementMethods.fetchElement(driver, locatorType, frameName));
@@ -245,6 +247,9 @@ public class commonMethods extends TestBase{
 			logsObj.log ("unable to switch to login frame");
 			flag=Constants_FRMWRK.Fail;
 			CustomExceptions.Exit(testcaseName, "switchToFrameFromDefault-Switch to "+frameName+" frame from default", "Unable to switch to "+frameName+" frame from defaultdue to error->"+e+" ,hence cannot execute further test steps..");
+		}
+		finally{
+			driver.manage().timeouts().implicitlyWait(Constants_TimeOuts.Element_TimeOut, TimeUnit.SECONDS);
 		}
 		return flag;
 	}
