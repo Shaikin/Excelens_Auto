@@ -337,11 +337,11 @@ public static void O365_loginwithCredentials(WebDriver driver,String username,St
 	public static int getApplicationFrameCount(WebDriver driver){
 		int flag=0;
 		commonMethods.switchToDefaultPage(driver);
-		flag=ExplicitWaitUtil.getVisibleElementsSize(driver, Constants_FRMWRK.FindElementByXPATH, ObjRepository.frame_single,Constants_TimeOuts.Save_TimeOut);
+		flag=ExplicitWaitUtil.getVisibleElementsSize(driver, Constants_FRMWRK.FindElementByXPATH, ObjRepository.frame_single,Constants_TimeOuts.sync_frame_load);
 		return flag;
 	}
 	/**
-	 * Switches to latest frame displayed
+	 * Switches to latest DLG frame displayed
 	 * @author shaikk
 	 * @param driver
 	 * @param testcasename
@@ -355,12 +355,45 @@ public static void O365_loginwithCredentials(WebDriver driver,String username,St
 			if(frames==0){				
 			}
 			else if(frames!=0){
-				frameName=ObjRepository.frame_list_pattern;
+				frameName=ObjRepository.frame_dlg_list_pattern;
 				frameName=frameName.replaceAll("framelist", String.valueOf(frames));
 				commonMethods.switchToFrameFromDefault(driver, testcasename, Constants_FRMWRK.FindElementByXPATH, frameName);
 			}
 		}catch (Throwable t ){
-			CustomExceptions.Exit(testcasename, "Switch to latest frame -Failure", "Unable to switch the latest frame expected due to error-"+commonMethods.getStackTrace(t));
+			CustomExceptions.Exit(testcasename, "Switch to latest DLG frame -Failure", "Unable to switch the latest frame expected due to error-"+commonMethods.getStackTrace(t));
+		}
+
+
+	}
+	/**
+	 * Switches to latest Marketplace
+	 * @param driver
+	 * @param testcasename
+	 * @throws Throwable
+	 */
+	public static void switchToLatestMarketplaceframe(WebDriver driver,String testcasename) throws Throwable{
+		String frameName;
+		int counter=0;
+		WaitUtil.pause(Constants_TimeOuts.sync_frame_load);
+		try{
+					int frames=0;
+					while (frames ==0 && counter<20){
+						frames=getApplicationFrameCount(driver);
+						WaitUtil.pause(Constants_TimeOuts.generic_TimeOut);
+						counter=counter+1;
+					}
+					
+			if(frames==0){	
+				System.err.println("No iframes listed....");
+			}
+			else if(frames!=0){
+				frameName=ObjRepository.frame_marketplace_list_pattern;
+				frameName=frameName.replaceAll("framelist", String.valueOf(frames));
+				commonMethods.switchToFrameFromDefault(driver, testcasename, Constants_FRMWRK.FindElementByXPATH, frameName);
+				System.out.println("Switched to frame -"+frameName);
+			}
+		}catch (Throwable t ){
+			CustomExceptions.Exit(testcasename, "Switch to latest Marketplace frame -Failure", "Unable to switch the latest frame expected due to error-"+commonMethods.getStackTrace(t));
 		}
 
 
