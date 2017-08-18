@@ -118,7 +118,10 @@ public class KeyMethods extends TestBase{
 				flag=KeysUtil.dropDown(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
 				break;
 			case DROPDOWN_JQX:
-				flag=KeysUtil.dropDown_js(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
+				flag=KeysUtil.dropDown_js(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element,"JQX");
+				break; 
+			case DROPDOWN_REACT:
+				flag=KeysUtil.dropDown_js(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element,"REACT");
 				break; 
 			case CHECKBOX:
 				flag=KeysUtil.checkBoxORradiobutton(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
@@ -289,7 +292,10 @@ public class KeyMethods extends TestBase{
 				flag=KeysUtil.dropDown(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
 				break;
 			case DROPDOWN_JQX:
-				flag=KeysUtil.dropDown_js(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
+				flag=KeysUtil.dropDown_js(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element,"JQX");
+				break; 
+			case DROPDOWN_REACT:
+				flag=KeysUtil.dropDown_js(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element,"REACT");
 				break; 
 			case CHECKBOX:
 				flag=KeysUtil.checkBoxORradiobutton(driver, refID, testcaseName, workFlow, Step, identifyBy, objectType, objectLocator, input, element);
