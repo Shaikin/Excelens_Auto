@@ -102,7 +102,8 @@ public class Dialogs {
     }   
 	
 	
-	public static void browse(String browser,String filePath,String dialogName) throws WindowsHandlerException, InterruptedException{
+	public static void browse(String browser,WebDriver driver,String filePath,String dialogName) throws WindowsHandlerException, InterruptedException{
+		
 		WindowElement windowElement = null;
 		 WindowElement uploadElement=null;
 		AutoITUtil.loadJocobDLL();
@@ -111,7 +112,15 @@ public class Dialogs {
 		WindowHandler handle=AutoIT_ActionsUtil.getHandler();
 		
 		if(browser.equalsIgnoreCase("ie")){// dialogname reg expression for all browsers
-			 windowElement=AutoIT_ActionsUtil.getDialog(handle,dialogName+" - Windows Internet Explorer");
+			
+			if(commonMethods.getBrowserVersion(driver).contains("11")){
+				// windowElement=AutoIT_ActionsUtil.getDialog(handle,"WebDriver - Internet Explorer");
+				 windowElement=AutoIT_ActionsUtil.getDialog(handle,dialogName+" - Internet Explorer");
+			}else{
+					//windowElement=AutoIT_ActionsUtil.getDialog(handle,"WebDriver - Windows Internet Explorer");
+				 windowElement=AutoIT_ActionsUtil.getDialog(handle,dialogName+" - Windows Internet Explorer");
+			}	
+			// windowElement=AutoIT_ActionsUtil.getDialog(handle,dialogName+" - Windows Internet Explorer");
 			uploadElement = handle.findElementByName(windowElement,"Choose File to Upload");
 		}else if (browser.equalsIgnoreCase("chrome")){
 			windowElement=AutoIT_ActionsUtil.getDialog(handle,dialogName+" - Google Chrome"); 
@@ -121,14 +130,21 @@ public class Dialogs {
 			windowElement=AutoIT_ActionsUtil.getDialog(handle,dialogName+" - Mozilla Firefox");
 			uploadElement = handle.findElementByName(windowElement,"File Upload");
 		}
+		try{
+			WindowElement fileNamePath = handle.findElementByNameAndClassName(
+					uploadElement, "File name:", "Edit");
+			handle.typeKeys(fileNamePath, filePath);
+
+			WindowElement openButton = handle.findElementByName(uploadElement,
+					"Open");
+			handle.click(openButton);
+		}catch(Exception ex){
+			WindowElement cancelButton = handle.findElementByName(uploadElement,
+					"Cancel");
+			handle.click(cancelButton);
+			throw ex;
+		}
 		
-		WindowElement fileNamePath = handle.findElementByNameAndClassName(
-				uploadElement, "File name:", "Edit");
-		handle.typeKeys(fileNamePath, filePath);
-		
-		WindowElement openButton = handle.findElementByName(uploadElement,
-				"Open");
-		handle.click(openButton);
 	}
 	
 	private static void user_auth_ie(WindowHandler handle,WindowElement authwindowElement,String username,String password) throws WindowsHandlerException{
