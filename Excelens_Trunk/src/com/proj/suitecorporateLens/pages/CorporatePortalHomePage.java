@@ -11,6 +11,7 @@ import com.frw.util.DateUtil;
 import com.frw.util.NumberConversionUtil;
 import com.frw.util.WaitUtil;
 import com.frw.util.Xls_Reader;
+import com.frw.wait.ExplicitWaitUtil;
 import com.proj.Constants.Constants;
 import com.proj.Constants.Constants_TimeOuts;
 import com.proj.library.ElementPresence;
@@ -22,6 +23,7 @@ import com.proj.suiteDOCS.pages.Documents_EntryPage;
 import com.proj.suiteDOCS.reusables.DocumentRegisterGridUtil;
 import com.proj.suitecorporateLens.TestSuiteBase;
 import com.proj.util.CustomExceptions;
+import com.proj.util.Dialogs;
 import com.proj.util.fetchObjectRepository;
 import com.proj.utilApp.ApplicationMethods;
 import com.report.reporter.Reporting;
@@ -69,18 +71,25 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 	private static Hashtable<String,String>objects_locatorType_calendar=null; 
 	private static Hashtable<String,String>objects_objectType_calendar=null;
 	private static Hashtable<String,String>objects_objectLocator_calendar=null;
+	
+	private static Hashtable<String,String>objects_step_marketplace=null;
+	private static Hashtable<String,String>objects_locatorType_marketplace=null; 
+	private static Hashtable<String,String>objects_objectType_marketplace=null;
+	private static Hashtable<String,String>objects_objectLocator_marketplace=null;
+	
 
 
 	static {		
 		logsObj.log("fetchExcelobjects method triggred for Class "+className);
 		try {
 			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_Alerts", "alerts");
-			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_NewsCarousel", "NewsCarousel");
+			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_NewsCarousel", "marketplace");
 			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_Blog", "Blog");
 			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_MyDocuments", "MyDocs");
 			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_Favourites", "fav");
 			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_Announcements", "announcement");
 			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_Calendar", "calendar");
+			fetchObjectRepository.getObjects(CorporatePortalHomePage.class,  xlsReader_objects_cl, "Objects_Marketplace", "marketplace");
 
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -494,7 +503,7 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 	}
 
 	//===============================================================================================================
-	// 							                       Announcements
+	// 							                       Calendar
 	//===============================================================================================================
 
 	public static class Calendar{	
@@ -713,4 +722,160 @@ public class CorporatePortalHomePage extends TestSuiteBase{
 		}
 
 	}
+	
+	//===============================================================================================================
+	// 							                       Marketplace
+	//===============================================================================================================
+
+	public static class MarketPlace{	
+		private static void click_MarketPlace(WebDriver driver,String refId,String testcasename,String workflow) throws Throwable{
+			String step="Marketplace -Heading";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_marketplace, objects_objectType_marketplace, objects_objectLocator_marketplace, input);
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				CustomExceptions.Exit(testcasename, objects_step_marketplace.get(step)+"-Failure", "Please refer above details for more details");
+			}	
+
+			ExplicitWaitUtil.waitTitle(driver, Constants_TimeOuts.Page_Load_TimeOut, ObjRepository.browserpageTile_Marketplace);
+		}
+		private static void click_PostAd(WebDriver driver,String refId,String testcasename,String workflow) throws Throwable{
+			String step="Post an Ad";
+			commonMethods.switchToDefaultPage(driver);
+			ApplicationMethods.switchToLatestMarketplaceframe(driver, testcasename);
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_marketplace, objects_objectType_marketplace, objects_objectLocator_marketplace, input);
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				CustomExceptions.Exit(testcasename, objects_step_marketplace.get(step)+"-Failure", "Please refer above details for more details");
+			}	
+
+			ExplicitWaitUtil.waitTitle(driver, Constants_TimeOuts.Page_Load_TimeOut, ObjRepository.browserpageTile_Marketplace);
+		}
+		
+		private static void click_AddImageAndUpload(WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>data) throws Throwable{
+			String step="Add Image";
+			commonMethods.switchToDefaultPage(driver);
+			ApplicationMethods.switchToLatestMarketplaceframe(driver, testcasename);
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_marketplace, objects_objectType_marketplace, objects_objectLocator_marketplace, input);
+			
+			String uploadFilePath=Constants.DataFileLocation_CorporateLens+data.get("Add Image");
+			Dialogs.browse(browserName,driver, uploadFilePath, "Marketplace");
+		}
+		
+		private static void click_Publish(WebDriver driver,String refId,String testcasename,String workflow) throws Throwable{
+			String step="Publish";
+			commonMethods.switchToDefaultPage(driver);
+			ApplicationMethods.switchToLatestMarketplaceframe(driver, testcasename);
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_marketplace, objects_objectType_marketplace, objects_objectLocator_marketplace, input);
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				CustomExceptions.Exit(testcasename, objects_step_marketplace.get(step)+"-Failure", "Please refer above details for more details");
+			}	
+			commonMethods.pageLoadWait(driver);
+			ExplicitWaitUtil.waitTitle(driver, Constants_TimeOuts.Page_Load_TimeOut, ObjRepository.browserpageTile_Marketplace);
+		}
+		
+		public static void Validate_Marketplace_Ad(WebDriver driver,String refId,String testcasename,String workflow,HashMap<String,String>marketitemData) throws Throwable{
+			commonMethods.switchToDefaultPage(driver);
+			ApplicationMethods.switchToLatestMarketplaceframe(driver, testcasename);
+			
+			String step="Marketplace -Kind Category";			
+			
+			String locator_default=objects_objectLocator_marketplace.get(step);
+			String locator=objects_objectLocator_marketplace.get(step);
+			String KindofItem=marketitemData.get("Kind of Item");
+			
+			locator=commonMethods.replaceString("kindofitem", locator, KindofItem);
+			
+			objects_objectLocator_marketplace.put(step, locator);			
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_marketplace, objects_objectType_marketplace, objects_objectLocator_marketplace, input);
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				objects_objectLocator_marketplace.put(step, locator_default);
+				CustomExceptions.Exit(testcasename, objects_step_marketplace.get(step)+"-Failure", "Please refer above details for more details");
+			}	
+			objects_objectLocator_marketplace.put(step, locator_default);
+			commonMethods.pageLoadWait(driver);
+			
+			
+			step="Marketplace Item";			
+			
+			locator_default=objects_objectLocator_marketplace.get(step);
+			locator=objects_objectLocator_marketplace.get(step);
+			String ItemTitle=marketitemData.get("Item Title");
+			
+			locator=commonMethods.replaceString("ItemTitle", locator, ItemTitle);
+			
+			objects_objectLocator_marketplace.put(step, locator);
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_marketplace, objects_objectType_marketplace, objects_objectLocator_marketplace, input);
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				objects_objectLocator_marketplace.put(step, locator_default);
+				CustomExceptions.Exit(testcasename, objects_step_marketplace.get(step)+"-Failure", "Please refer above details for more details");
+			}	
+			objects_objectLocator_marketplace.put(step, locator_default);
+			commonMethods.pageLoadWait(driver);
+			
+		}
+		
+		public static void Validate_Marketplace_Ad_Webpart(WebDriver driver,String refId,String testcasename,String workflow,HashMap<String,String>marketitemData) throws Throwable{
+			
+			String step="Home Page-Markpetplace Item";			
+			
+			String locator_default=objects_objectLocator_marketplace.get(step);
+			String locator=objects_objectLocator_marketplace.get(step);
+			String ItemTitle=marketitemData.get("Item Title");
+			
+			locator=commonMethods.replaceString("ItemTitle", locator, ItemTitle);
+			
+			objects_objectLocator_marketplace.put(step, locator);
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_marketplace, objects_objectType_marketplace, objects_objectLocator_marketplace, input);
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				objects_objectLocator_marketplace.put(step, locator_default);
+				CustomExceptions.Exit(testcasename, objects_step_marketplace.get(step)+"-Failure", "Please refer above details for more details");
+			}	
+			objects_objectLocator_marketplace.put(step, locator_default);
+			
+			
+			step="Home Page-Marketplace item icon";			
+			
+			locator_default=objects_objectLocator_marketplace.get(step);
+			locator=objects_objectLocator_marketplace.get(step);
+			ItemTitle=marketitemData.get("Item Title");
+			String KindofItem=marketitemData.get("Kind of Item");
+			
+			locator=commonMethods.replaceString("ItemTitle", locator, ItemTitle);
+			locator=commonMethods.replaceString("kindofitem", locator, KindofItem);
+			
+			objects_objectLocator_marketplace.put(step, locator);
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_marketplace, objects_objectType_marketplace, objects_objectLocator_marketplace, input);
+			if(res.equalsIgnoreCase(Constants_FRMWRK.False)){
+				objects_objectLocator_marketplace.put(step, locator_default);
+				CustomExceptions.Exit(testcasename, objects_step_marketplace.get(step)+"-Failure", "Please refer above details for more details");
+			}	
+			objects_objectLocator_marketplace.put(step, locator_default);
+			
+			
+			
+		}
+
+		public static HashMap<String,String> AsContributor_PostAddInMarketplace(WebDriver driver,String refId,String testcasename,String workflow,Hashtable<String,String>data ) throws Throwable{
+			HashMap<String, String> addata=new HashMap<String,String>();
+
+			click_MarketPlace(driver, refId, testcasename, workflow);
+			click_PostAd(driver, refId, testcasename, workflow);
+			String step="What Kind of Item?";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_marketplace, objects_objectType_marketplace, objects_objectLocator_marketplace, data.get("Kind of Item"));
+			addata.put("Kind of Item", res);
+			step="Item Title";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_marketplace, objects_objectType_marketplace, objects_objectLocator_marketplace, data.get("Item Title")+"-"+DateUtil.getCurrentDateInRequiredDateFormat("ddMMyyyy hhmmss"));
+			addata.put("Item Title", res);
+			step="Price";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_marketplace, objects_objectType_marketplace, objects_objectLocator_marketplace, data.get("Price"));
+			addata.put("Price", res);
+			step="Description";
+			res=KeyMethods.f_performAction(driver, refId, testcasename, workflow, step, objects_locatorType_marketplace, objects_objectType_marketplace, objects_objectLocator_marketplace, data.get("Description"));
+			addata.put("Description", res);
+			click_AddImageAndUpload(driver, refId, testcasename, workflow, data);
+			click_Publish(driver, refId, testcasename, workflow);
+			
+			return addata;
+		}
+	}
+		
+		
 }
