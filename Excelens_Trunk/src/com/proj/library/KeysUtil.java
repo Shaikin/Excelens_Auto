@@ -319,6 +319,7 @@ public class KeysUtil extends KeyMethods{
 			if(element!=null){
 				try {
 					element=ExplicitWaitUtil.waitForElementTobeActionable(driver, locatorType, objectLocator, Constants_TimeOuts.Element_TimeOut);
+					logsObj.log(testcaseName+"-->"+objectLocator+" exists and ready for click... ");
 				} catch (Throwable e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -458,8 +459,7 @@ public class KeysUtil extends KeyMethods{
 
 	}
 	/**
-	 * Selects a item from the list (drop down type JS)
-	 * @author shaikka
+	 * Selects a item from the list (drop down type JS/React)
 	 * @param driver
 	 * @param refID
 	 * @param testcaseName
@@ -470,9 +470,10 @@ public class KeysUtil extends KeyMethods{
 	 * @param objectLocator
 	 * @param input
 	 * @param element
+	 * @param dropDownType
 	 * @return
 	 */
-	protected static String dropDown_js(WebDriver driver,String refID,String testcaseName,String workFlow,String Step,String locatorType, String objectType, String objectLocator,String input,WebElement element){
+	protected static String dropDown_js(WebDriver driver,String refID,String testcaseName,String workFlow,String Step,String locatorType, String objectType, String objectLocator,String input,WebElement element,String dropDownType){
 		String flag=Constants_FRMWRK.False;		
 		String generic_Step="Select an Item from dropdown ";
 		Step=workFlow+generic_Step+Step;
@@ -498,8 +499,14 @@ public class KeysUtil extends KeyMethods{
 			} catch (Throwable e) {				
 				e.printStackTrace();
 			}
-			WaitUtil.pause(Constants_TimeOuts.generic_TimeOut);
-			flag=KeyMethodsUtil.js_selectItem(driver, workFlow, generic_Step, ObjRepository.js_dropdown_items, input);
+			WaitUtil.pause(Constants_TimeOuts.sync_element_load);
+			String dropdownItems_locator;
+			if(dropDownType.equalsIgnoreCase("React")){
+				dropdownItems_locator=ObjRepository.js_react_dropdown_items;
+			}else{
+				dropdownItems_locator=ObjRepository.js_dropdown_items;
+			}
+			flag=KeyMethodsUtil.js_selectItem(driver, workFlow, generic_Step,dropdownItems_locator , input);
 		}
 		return flag;
 	}
@@ -1093,6 +1100,81 @@ public class KeysUtil extends KeyMethods{
 			PageLoadWaitUtil.waitForPageToLoad(driver);
 		} catch (Throwable e) {				
 			//e.printStackTrace();
+		}
+		return flag;
+	}
+	
+	protected static String enter_autoSuggestReactAndSelect(WebDriver driver,String refID,String testcaseName,String workFlow,String Step,String locatorType, String objectType, String objectLocator,String input,WebElement element) throws Throwable{
+		String flag=Constants_FRMWRK.True;		
+		String generic_autosuggest_step="Enter Suggestion for ";
+		generic_autosuggest_step=workFlow+generic_autosuggest_step+Step;
+		if(!input.equalsIgnoreCase("") ){
+			//element.click();				
+			if(input.equalsIgnoreCase("Any")){
+/*				element.sendKeys(Keys.SPACE);
+				element.sendKeys(Keys.BACK_SPACE);
+				Reporting.logStep(driver, refID, generic_autosuggest_step, objectType+": "+objectLocator+" exists and the input value is Any hence entered Space & BackSpace to list all items available", Constants_FRMWRK.Pass);
+
+				logsObj.log(testcaseName+"--> "+objectLocator+" exists and the value entered is "+input);
+				Reporting.logStep(driver, refID, generic_autosuggest_step, objectType+": "+objectLocator+" exists and the value entered is "+input, Constants_FRMWRK.Pass);
+
+				objectLocator=objectLocator+ObjRepository.js_autosuggest_items;
+				PageLoadWaitUtil.waitForAjax(driver);
+				PageLoadWaitUtil.waitForPageToLoad(driver);
+				WaitUtil.pause(Constants_TimeOuts.generic_TimeOut);
+				String flag_js=KeyMethodsUtil.js_selectItem(driver, workFlow, Step, objectLocator, input);
+				if(flag_js.equalsIgnoreCase(Constants_FRMWRK.False)){
+					flag=Constants_FRMWRK.False;
+				}
+*/
+			}else{
+				objectLocator=objectLocator+ObjRepository.js_autosuggest_input;
+				element=ExplicitWaitUtil.waitForElement(driver,locatorType, objectLocator, Constants_TimeOuts.Element_TimeOut) ;
+				//element.click();
+				if(input.contains(Constants.delimiter_data)){
+					String[] ip=commonMethods.splitString(input, Constants.delimiter_data);
+					for (int i=0;i<ip.length;i++){
+						element.sendKeys(ip[i]);
+
+						WaitUtil.pause(Constants_TimeOuts.generic_TimeOut);	
+
+						logsObj.log(testcaseName+"--> "+objectLocator+" exists and the value entered is "+ip[i]);
+						Reporting.logStep(driver, refID, generic_autosuggest_step, objectType+": "+objectLocator+" exists and the value entered is "+ip[i], Constants_FRMWRK.Pass);
+
+						String objectLocator_jsitems=objectLocator+ObjRepository.js_autosuggest_items;
+						PageLoadWaitUtil.waitForAjax(driver);
+						PageLoadWaitUtil.waitForPageToLoad(driver);
+						WaitUtil.pause(Constants_TimeOuts.generic_TimeOut);
+						String flag_js=KeyMethodsUtil.js_selectItem(driver, workFlow, Step, objectLocator_jsitems, ip[i]);
+						if(flag_js.equalsIgnoreCase(Constants_FRMWRK.False)){
+							flag=Constants_FRMWRK.False;
+						}
+
+					}
+				}else{
+					element.sendKeys(input);
+
+					WaitUtil.pause(Constants_TimeOuts.generic_TimeOut);	
+
+					logsObj.log(testcaseName+"--> "+objectLocator+" exists and the value entered is "+input);
+					Reporting.logStep(driver, refID, generic_autosuggest_step, objectType+": "+objectLocator+" exists and the value entered is "+input, Constants_FRMWRK.Pass);
+
+					String objectLocator_jsitems=objectLocator+ObjRepository.js_autosuggest_items;
+					PageLoadWaitUtil.waitForAjax(driver);
+					PageLoadWaitUtil.waitForPageToLoad(driver);
+					WaitUtil.pause(Constants_TimeOuts.generic_TimeOut);
+					String flag_js=KeyMethodsUtil.js_selectItem(driver, workFlow, Step, objectLocator_jsitems, input);
+					if(flag_js.equalsIgnoreCase(Constants_FRMWRK.False)){
+						flag=Constants_FRMWRK.False;
+					}
+				}
+			}									    					
+
+		}else{
+			flag=Constants_FRMWRK.True;	
+		}
+		if(flag==Constants_FRMWRK.True){
+			flag=input;
 		}
 		return flag;
 	}
