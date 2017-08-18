@@ -30,10 +30,11 @@ public class ObjRepository {
 	public static String link_signOut=".//*[@class='_fc_4 o365buttonLabel' and text()='Sign out']";
 
 	//frame objects	
-	public static String frame_single=".//iframe[contains(@id,'DlgFrame')]";	
+	public static String frame_single=".//iframe[contains(@id,'Frame')]";	 //".//iframe[contains(@id,'DlgFrame')]"
 	public static String frame_double="(.//iframe[contains(@id,'DlgFrame')])[2]";
-	public static String frame_list_pattern="(.//iframe[contains(@id,'DlgFrame')])[framelist]";
+	public static String frame_dlg_list_pattern="(.//iframe[contains(@id,'DlgFrame')])[framelist]";
 	public static String frame_documentList=".//iframe[contains(@class,'doc-lib-view-frame')]";
+	public static String frame_marketplace_list_pattern="(.//iframe[contains(@id,'marketPlace')])[framelist]";
 	//choice objects
 	public static String choice_select=".//*[@title='Add the highlighted item to this field']";
 	public static String choice_ok=".//*[contains(@id,'OkButton')]";
@@ -46,7 +47,8 @@ public class ObjRepository {
 	public static String js_autosuggest_input="/../input[2]";
 	public static String js_autosuggest_items="/../div/ul/li/a/div";
 	public static String js_dropdown_items="//div[@class='option']/div";
-
+	public static String js_react_dropdown_items=".//div[contains(@class,'option')]";
+	
 	//Grid Container
 	public static String container_subMenu="//*[@class='ui popup inverted right center']";
 	public static String container_transmittals="Transmittals";
@@ -86,6 +88,7 @@ public class ObjRepository {
 	public static final String browserpageTile_Home="Home";
 	public static final String browserpageTile_AdminFavourites_AllItems="Admin Favourites - All Items";
 	public static final String browserpageTile_Announcement_AllItems="Announcements - All Items";
+	public static final String browserpageTile_Marketplace="Marketplace";
 	
 
 	//Search components 
