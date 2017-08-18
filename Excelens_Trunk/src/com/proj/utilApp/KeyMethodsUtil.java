@@ -72,6 +72,7 @@ public class KeyMethodsUtil extends TestBase{
 					}
 
 				}
+				rowCount=rowCount+1;
 			}
 			if (flag.equalsIgnoreCase(Constants_FRMWRK.False)){
 				Reporting.logStep(driver, refID, step, "js_selectItem:- Item "+input+" is not listed , the complete item list available is: "+dropdownItems, Constants_FRMWRK.Fail);
